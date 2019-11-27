@@ -8,7 +8,7 @@ Created on Wed Nov 27 15:58:02 2019
 class Echiquier8x8:
     # Constructor
     def __init__(self):
-        self.initPygame()
+        pass
 
     # Coordonnees de chaque case de l'echiquier
     coordonnees = [
