@@ -4,7 +4,6 @@ Created on Wed Nov 27 15:58:02 2019
 
 @author: guilbers
 """
-import pygame
 
 class Echiquier8x8:
     # Constructor
@@ -22,17 +21,6 @@ class Echiquier8x8:
         'a2','b2','c2','d2','e2','f2','g2','h2',
         'a1','b1','c1','d1','e1','f1','g1','h1',
         ]    
- 
-    # Initializes pygame        
-    def initPygame(self): 
-        #Initialization
-        pygame.init()
-        # Sets the screen size.
-        pygame.display.set_mode((800, 600))    
-        # Sets the timer to check event every 200 ms
-        pygame.time.set_timer(pygame.USEREVENT, 200)         
-        # Gets pygame screen
-        self.screen = pygame.display.get_surface()
     
     def debutPartie(self):
     # Position initiale des pièces sur l'echiquier
