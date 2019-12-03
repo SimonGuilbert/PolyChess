@@ -96,3 +96,26 @@ class Piece:
         #Creation de la liste des positions possibles
         position_possible=[position-k*ligne-i for k in [-2,2] for i in [-1,1]] + [position-m*ligne-l for m in [-1,1] for l in [-2,2]]
         return position_possible
+    
+    def mvmt_tour(self):
+        '''
+        La tour se déplace d'autant de cases voulue devant, derriere, a droite ou a gauche
+        Retourne la liste des positions possibles
+        '''
+        #Recuperation de la longeur de la ligne
+        len_ligne = echequier.get_ligne()
+        #Recuperation de la position de pion
+        position = self.echequier.get_position()
+        #Calcule numero de ligne sur lequel est la tour
+        ligne=position//len_ligne+1
+        #Initialisation de la liste des positions possibles
+        position_possibles=[]
+        #Ajout des cases a l'horizontale
+        for i in range(1,len_ligne+1):
+            position_posibles += [(ligne-1)*len_ligne+i]
+        #Ajout des cases a la verticale
+        for k in range(1,ligne-1):
+            position_possibles += [position-i*len_ligne]
+        for k in range(ligne+1,len_lignes+1):
+            position_possibles += [position+k*len_ligne]
+        return position_possibles
