@@ -45,3 +45,29 @@ class Piece:
             else:
                 position_possible += [position+ligne,position+ligne+1,position+ligne-1]
         return position_possible    
+
+    def mvmt_roi(self):
+        '''
+        Le roi peut potentiellemnt avancer d'une case autout de lui-meme
+        Retourne la liste des positions possibles
+        '''
+        #Recuperation de la longeur de la ligne
+        ligne = echequier.get_ligne()
+        #Recuperation de la position de pion
+        position = self.echequier.get_position()
+        #Creation de la liste des positions possibles
+        position_possible=[position-k*ligne-i for k in range(3) for i in range (3)]
+        return position_possible
+            
+    def mvmt_cavalier(self):
+        '''
+        Le cavalier se deplace de deux cases devant, derriere ou sur les cotes puis une case a droite ou gauche
+        Retourne la liste des positions possibles
+        '''
+        #Recuperation de la longeur de la ligne
+        ligne = echequier.get_ligne()
+        #Recuperation de la position de pion
+        position = self.echequier.get_position()
+        #Creation de la liste des positions possibles
+        position_possible=[position-k*ligne-i for k in [-2,2] for i in [-1,1]] + [position-m*ligne-l for m in [-1,1] for l in [-2,2]]
+        return position_possible
