@@ -32,4 +32,4 @@ if  __name__=='__main__':
                     ech.deplacer(mouvement[:2],mouvement[2:])
             
             else:
-                print('Veuillez Recommencer ')
+                print('Commande non valide. Veuillez Recommencer ')
