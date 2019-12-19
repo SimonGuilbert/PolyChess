@@ -123,7 +123,7 @@ class Echiquier8x8:
             sleep(2)
 
 # =============================================================================
-# Mise en place des regle : 
+# Mise en place des regles : 
 # =============================================================================
     def regleSimple(self,iPosInitial,iPosNouvelle):
         '''definie les coups non licites simple '''
@@ -143,6 +143,7 @@ class Echiquier8x8:
             return iPosNouvelle in piece.mvmt_cavalier(iPosInitial)
         if piece.getNom()=='ROI':
             return iPosNouvelle in piece.mvmt_roi(iPosInitial)
+     
         return True
             
 #if __name__ == "__main__":  
