@@ -47,7 +47,8 @@ class Echiquier8x8:
         # Variable qui repertorie tout les coups joues
         
         self.historique=[]
-        
+        self.cimetiereBlanc=[]
+        self.cimetiereNoir=[]
         
     def conversionEnIndex(self,position): 
         '''passer de coordonnees en index'''
@@ -96,6 +97,10 @@ class Echiquier8x8:
         affichage+='  -----------------------'+'\n'
         affichage+='   a  b  c  d  e  f  g  h'
         print(affichage)
+    
+    def estVide(self,iPos):
+        ''' verifie si il existe une piece a l'indice iPos'''
+        return self.echiquier[iPos].getNom() =='' 
         
         
     def affichageHistorique(self):
@@ -106,8 +111,7 @@ class Echiquier8x8:
             affHist+=' | '
         print(affHist)
         
-#    def vide(self,index):
-#        return self.echiquier[index].getCouleur()==''
+
     def deplacer(self,posInitial,posNouvelle):
         iPosInitial=self.conversionEnIndex(posInitial)
         iPosNouvelle=self.conversionEnIndex(posNouvelle)
@@ -116,8 +120,11 @@ class Echiquier8x8:
             self.echiquier[iPosNouvelle]=self.echiquier[iPosInitial]
             self.echiquier[iPosInitial]=Piece()
             self.historique.append([posInitial,posNouvelle])
-         
-        
+            if not self.estVide(iPosNouvelle):
+                if self.echiquier[iPosNouvelle].getNom()[1]=='b':
+                    self.cimetiereBlanc.append(self.echiquier[iPosNouvelle])
+                else:
+                    self.cimetiereNoir.append(self.echiquier[iPosNouvelle])
         else:
             print("Le coup n'est pas possible")
             sleep(2)
@@ -126,7 +133,7 @@ class Echiquier8x8:
 # Mise en place des regles : 
 # =============================================================================
     def regleSimple(self,iPosInitial,iPosNouvelle):
-        '''definie les coups non licites simple '''
+        '''definie les coups licites sur les deplacements possibles des pieces '''
         piece=self.echiquier[iPosInitial]
         
         #on ne peut pas manger ses propres pieces
@@ -143,12 +150,7 @@ class Echiquier8x8:
             return iPosNouvelle in piece.mvmt_cavalier(iPosInitial)
         if piece.getNom()=='ROI':
             return iPosNouvelle in piece.mvmt_roi(iPosInitial)
-     
+        if self.isVide(iPosInitial)=='':
+            return False
         return True
-            
-#if __name__ == "__main__":  
-#         
-#    echiquier = Echiquier8x8()
-#    
-#    echiquier.__str__()
-   
+    
