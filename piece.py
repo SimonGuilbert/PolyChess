@@ -1,6 +1,3 @@
-#On suppose que la configuration de l'echiquier est 8x8
-#On utilise ici que les index
-
 
 class Piece:
     
@@ -64,7 +61,7 @@ class Piece:
             if self.tab120[t] == position:
                 pos_120=t
         #Recuperation de la longeur de la ligne
-        ligne = 7 
+        ligne = 10 
 
         #Numero du tour (initial=1) Doit etre recuperer
         nb_tours= 1
@@ -74,7 +71,7 @@ class Piece:
         if self.couleur == 'blanc':
             #Tour initial
             if nb_tours == 1:
-                position_possible += [position-2*ligne,position-ligne]
+                position_possible += [self.tab120[pos_120-ligne],self.tab120[pos_120-ligne*2]]
             #Tours suivants
             else:
                 for i in [-1,1]:
@@ -86,14 +83,14 @@ class Piece:
         if self.couleur == 'noir':
             if nb_tours == 1:
                 #Tour initial
-                position_possible += [position+2*ligne,position+ligne]
+                position_possible += [self.tab120[pos_120+ligne],self.tab120[pos_120+ligne*2]]
             #Tours suivants
             else:
                 for i in [-1,1]:
                     if self.tab120[pos_120+ligne+i]!=-1:
                         #Si les cases devant lui sont vides
-                        if self.echiquier.estVide(self.tab120[pos_120+10+i]):
-                            position_possible += [self.tab120[pos_120+10+i]]
+                        if self.echiquier.estVide(self.tab120[pos_120+ligne*i]):
+                            position_possible += [self.tab120[pos_120+ligne*i]]
         return position_possible
 
     def mvmt_roi(self,position):
