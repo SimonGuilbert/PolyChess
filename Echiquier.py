@@ -170,6 +170,7 @@ class Echiquier8x8:
         else:
             
             print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
+
             sleep(2)
 
 # =============================================================================
@@ -218,25 +219,30 @@ class Echiquier8x8:
         return coupsPossibleNoir
 
     def echec(self):
-        if self.toursJoueur=='blanc':
+        
+        if self.tourJoueur=='blanc':
+            ListeCoupsRoiNoir=[]
             for piece in self.echiquier:
                 if piece.getCouleur=='noir' and piece.getNom=='ROI':
                     ListeCoupsRoiNoir=piece.position
-            ListeBlanc=self.coupsPossibleBlanc()
-            for i in ListeBlanc:
-                if i in ListeCoupsRoiNoir:
-                    ListeCoupsRoiNoir.remove(i)
-            return ListeCoupsRoiNoir 
+            if ListeCoupsRoiNoir!=[]:
+                ListeBlanc=self.coupsPossibleBlanc()
+                for i in ListeBlanc:
+                    if i in ListeCoupsRoiNoir:
+                        ListeCoupsRoiNoir.remove(i)
+                    return len(ListeCoupsRoiNoir)
         else:
-             
+            ListeCoupsRoiBlanc=[]
             for piece in self.echiquier:
                 if piece.getCouleur=='blanc' and piece.getNom=='ROI':
                     ListeCoupsRoiBlanc=piece.position
             ListeNoir=self.coupsPossibleNoir()
-            for i in ListeNoir:
-                if i in ListeCoupsRoiBlanc:
-                    ListeCoupsRoiBlanc.remove(i)
-            return ListeCoupsRoiBlanc
+            if ListeCoupsRoiBlanc!=[]:
+                for i in ListeNoir:
+                    if i in ListeCoupsRoiBlanc:
+                        ListeCoupsRoiBlanc.remove(i)
+                return len(ListeCoupsRoiBlanc)
+            return -1
 
 
     def promotion(self,position):
@@ -273,10 +279,3 @@ class Echiquier8x8:
             self.echiquier[2]=self.echiquier[4]
             self.echiquier[4]=Piece()
             self.echiquier[0]=Piece()
-            
-        else :
-            print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
-            
-        
-        
-   
