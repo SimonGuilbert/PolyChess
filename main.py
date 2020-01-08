@@ -12,10 +12,10 @@ from time import sleep
 
 # import des classes
 from Echiquier import Echiquier8x8
-print("\n\033[4mJeux d'echecs, exit permet d'arreter le jeux\033[0m")
+print("\n\033[4mJeux d'echecs, exit permet d'arrêter le jeu\033[0m")
       
 if  __name__=='__main__':
-    print("\nEntrer 1v1 pour jouer contre un humain et ia pour jouer contre l'ordinateur")  
+    print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur")  
     choix = input("Choix du mode de jeu : ")
     ech=Echiquier8x8()
     '''boucle infinie pour le jeux d'échec'''
@@ -23,15 +23,15 @@ if  __name__=='__main__':
         while True:
             ech.__str__()
             if ech.tourJoueur=='blanc':
-                print("Entrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple : a7a6 "+
-                      "permet de déplacer le pion de a7 en a6. \nPour roquer, il faut écrire le mot roque suivi "+
-                      "de la position de la tour que l'on souhaite 'roquer'. Par exemple roqueh1")
+                print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
+                      "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
+                      "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
                 mouvement=input('Entrer le mouvement (exit permet de quitter) : ')
                 if mouvement  == 'historique':
                     ech.affichageHistorique()
                 elif len(mouvement)==7:
                     try: 
-                        ech.roque(mouvement[2:])
+                        ech.roque(mouvement[-2:])
                     except:
                         print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
                         sleep(2)
