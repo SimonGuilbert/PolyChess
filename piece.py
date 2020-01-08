@@ -109,21 +109,31 @@ class Piece:
         Le cavalier se deplace de deux cases devant, derriere ou sur les cotes puis une case a droite ou gauche, tant que les cases sont vides
         Retourne la liste des positions possibles
         '''
+        
+        for t in range(len(self.tab120)):
+            if self.tab120[t] == position:
+                pos_120=t
         #Recuperation de la longeur de la ligne
-        ligne =8
+        ligne =10
         #Initialisation de la liste des positions
         position_possibles=[]
         #Creation de la liste des positions possibles
         for k in [-2,2]: #Indice vertical
             for i in [-1,1]: #Indice horizontal
-                # Si les cases sont vides
-                if self.echiquier.estVide(position-k*ligne-i):
-                    position_possibles+=[position-k*ligne-i]
+                if self.tab120[pos_120+k*ligne+i]!=-1:
+                    print('hello',pos_120,pos_120+k*ligne+i)
+                    # Si les cases sont vides
+                    if self.echiquier.estVide(self.tab120[pos_120+k*ligne+i]):
+                        print('vide',self.tab120[pos_120+k*ligne+i])
+                        position_possibles+=[self.tab120[pos_120+k*ligne+i]]
         for k in [-1,1]: #Indice vertical
             for i in [-2,2]: #Indice horizontal
                 # Si les cases sont vides
-                if self.echiquier.estVide(position-k*ligne-i):
-                    position_possibles+=[position-k*ligne-i]
+                if self.tab120[pos_120+k*ligne+i]!=-1:
+                    print('blabla',pos_120,pos_120+k*ligne+i)
+                    if self.echiquier.estVide(self.tab120[pos_120+k*ligne+i]):
+                        print('vide',self.tab120[pos_120+k*ligne+i])
+                        position_possibles+=[self.tab120[pos_120+k*ligne+i]]
         return position_possibles
     
     def mvmt_tour(self,position):
