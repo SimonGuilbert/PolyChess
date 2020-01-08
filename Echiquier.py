@@ -169,8 +169,7 @@ class Echiquier8x8:
                     self.cimetiereNoir.append(self.echiquier[iPosNouvelle])
         else:
             
-            print("\n\033[4mLe coup n'est pas possible. Réessayez\033[0m")
-
+            print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
             sleep(2)
 
 # =============================================================================
