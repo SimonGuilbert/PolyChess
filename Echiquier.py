@@ -138,6 +138,7 @@ class Echiquier8x8:
         
 
     def deplacer(self,posInitial,posNouvelle):
+        
         iPosInitial=self.conversionEnIndex(posInitial)
         iPosNouvelle=self.conversionEnIndex(posNouvelle)
         if self.regleSimple(iPosInitial,iPosNouvelle):
@@ -150,7 +151,7 @@ class Echiquier8x8:
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_tour(iPosNouvelle)
             elif self.echiquier[iPosNouvelle].getNom()=='PION':
                  positionPossible+=self.echiquier[iPosNouvelle].mvmt_pion(iPosNouvelle)
-                 if posNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:
+                 if posNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
                     self.promotion(posNouvelle) 
             elif self.echiquier[iPosNouvelle].getNom()=='CAVALIER':
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_cavalier(iPosNouvelle)
@@ -201,8 +202,9 @@ class Echiquier8x8:
         if self.estVide(iPosInitial):
             return False
         return True
+    
     def coupsPossibleBlanc(self):
-        #Permet de recuperer la liste de tout les coups possible du joueur avec les pions blanc 
+        #Permet de recuperer la liste de tout les coups possible du joueur avec les pieces blanc 
         LcoupsPossibleBlanc=[]
         for i in self.echiquier:
             if i.getCouleur()=='blanc':
@@ -210,7 +212,7 @@ class Echiquier8x8:
         return LcoupsPossibleBlanc
 
     def coupsPossibleNoir(self):
-        #Permet de recuperer la liste de tout les coups possible du joueur avec les pions noir 
+        #Permet de recuperer la liste de tout les coups possible du joueur avec les pieces noir 
 
         coupsPossibleNoir=[]
         for i in self.echiquier:
@@ -218,6 +220,9 @@ class Echiquier8x8:
                 coupsPossibleNoir+=i.position
         return coupsPossibleNoir
 
+# =============================================================================
+# Echec Et echec et mat
+# =============================================================================
     def echec(self):
         
         if self.tourJoueur=='blanc':
@@ -244,7 +249,9 @@ class Echiquier8x8:
                 return len(ListeCoupsRoiBlanc)
             return -1
 
-
+# =============================================================================
+# Coups spéciaux
+# =============================================================================
     def promotion(self,position):
         
         promo= input('Promotion!! Veuillez choisir une piece.')
@@ -279,3 +286,6 @@ class Echiquier8x8:
             self.echiquier[2]=self.echiquier[4]
             self.echiquier[4]=Piece()
             self.echiquier[0]=Piece()
+        else :
+            print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+        
