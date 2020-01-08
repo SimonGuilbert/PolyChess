@@ -219,3 +219,6 @@ class Piece:
                     #Deplacement sur la colonne suivante a gauche
                     i=i-1
         return position_possibles
+    
+    def mvmt_dame(self,position):
+        return self.mvmt_tour(position)+self.mvmt_fou(position)
