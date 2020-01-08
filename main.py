@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan  8 08:01:54 2020
-
-@author: guillyd
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Mon Dec  2 18:32:45 2019
 @author: Jonathan Molieres
 """
@@ -31,18 +24,27 @@ if  __name__=='__main__':
             ech.__str__()
             if ech.tourJoueur=='blanc':
                 print("Entrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple : a7a6 "+
-                      "permet de déplacer le pion de a7 en a6. \n Pour roquer, il faut écrire le mot roque suivi "+
+                      "permet de déplacer le pion de a7 en a6. \nPour roquer, il faut écrire le mot roque suivi "+
                       "de la position de la tour que l'on souhaite 'roquer'. Par exemple roqueh1")
                 mouvement=input('Entrer le mouvement (exit permet de quitter) : ')
                 if mouvement  == 'historique':
                     ech.affichageHistorique()
                 elif len(mouvement)==7:
-                    ech.roque(mouvement[2:])
+                    try: 
+                        ech.roque(mouvement[2:])
+                    except:
+                        print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+                        sleep(2)
+                        
                 elif len(mouvement)==4:
                     if mouvement=='exit': 
                         break
                     else:
-                        ech.deplacer(mouvement[:2],mouvement[2:]) 
+                        try:
+                            ech.deplacer(mouvement[:2],mouvement[2:]) 
+                        except:
+                            print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+                            sleep(2)
                 else:
                     print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
                     sleep(2)
