@@ -9,7 +9,9 @@ class Piece:
         self.nom = nom
         self.couleur = couleur
         self.cimetiere = []
-        
+        self.position=[]
+        self.valeur=0
+        self.tour=1
         
         self.tab120 = (
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -47,6 +49,19 @@ class Piece:
     #setter
     def impEchiquier(self,Echiquier):
         self.echiquier=Echiquier
+        
+    def valeur(self):
+        if self.nom=='PION':
+            self.valeur=1
+        elif self.nom=='FOU':
+            self.valeur=3
+        elif self.nom=='CAVALIER':
+            self.valeur==3
+        elif self.nom=='TOUR':
+            self.valeur=5
+        elif self.nom == 'DAME':
+            self.valeur=9
+        return self.valeur
 # =============================================================================
 # Definition des mouvemements possibles
 # =============================================================================
@@ -63,14 +78,19 @@ class Piece:
         #Recuperation de la longeur de la ligne
         ligne = 10 
         #Numero du tour (initial=1) Doit etre recuperer
-        nb_tours= 1
         #Initialisation de la liste des positions
         position_possible=[]
         # Pion Blanc
         if self.couleur == 'blanc':
             #Tour initial
-            if nb_tours == 1:
-                position_possible = position_possible + [self.tab120[pos_120-ligne],self.tab120[pos_120-ligne*2]]
+            if self.tour == 1:
+                if self.tab120[pos_120-ligne]!=-1:
+                    if self.echiquier.estVide(self.tab120[pos_120-ligne]):
+                        position_possible += [self.tab120[pos_120-ligne]]
+                if self.tab120[pos_120-ligne*2]!=-1:
+                    if self.echiquier.estVide(self.tab120[pos_120-ligne*2]):
+                        position_possible += [self.tab120[pos_120-ligne*2]]
+                self.tour=2
             #Tours suivants
             else:
                 if self.tab120[pos_120-ligne]!=-1:
@@ -79,9 +99,15 @@ class Piece:
                         position_possible += [self.tab120[pos_120-ligne]]
         #Pion noir
         if self.couleur == 'noir':
-            if nb_tours == 1:
-                #Tour initial
-                position_possible += [self.tab120[pos_120+ligne],self.tab120[pos_120+ligne*2]]
+            #Tour initial
+            if self.tour == 1:
+                if self.tab120[pos_120+ligne]!=-1:
+                    if self.echiquier.estVide(self.tab120[pos_120+ligne]):
+                        position_possible += [self.tab120[pos_120+ligne]]
+                if self.tab120[pos_120+ligne*2]!=-1:
+                    if self.echiquier.estVide(self.tab120[pos_120+ligne*2]):
+                        position_possible += [self.tab120[pos_120+ligne*2]]
+                self.tour=2
             #Tours suivants
             else:
                 if self.tab120[pos_120+ligne]!=-1:
@@ -288,3 +314,5 @@ class Piece:
         Retourne la liste des positions possibles
         '''
         return self.mvmt_tour(position)+self.mvmt_fou(position)
+    
+        
