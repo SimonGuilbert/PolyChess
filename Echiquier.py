@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Dec  3 10:43:15 2019
+
+@author: Jonathan Molieres
+"""
+
 from time import sleep #permet d'attendre la lecture au joueur en cas d'une erreur de coups 
-from Piece import Piece
+from piece import Piece
 
 # =============================================================================
 # Classe de l'echiquier avec les regles associees 
@@ -33,8 +40,6 @@ class Echiquier8x8:
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
         Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
         ]
-        for i in self.echiquier:
-            i.impEchiquier(self)
         # Matrice d'affichage
         self.jeux=['--' for i in range(8*8) ] 
         # Variable qui determine les tours de jeux
@@ -145,6 +150,7 @@ class Echiquier8x8:
             return iPosNouvelle in piece.mvmt_cavalier(iPosInitial)
         if piece.getNom()=='ROI':
             return iPosNouvelle in piece.mvmt_roi(iPosInitial)
-        if self.estVide(iPosInitial)=='':
+        if self.estVide(iPosInitial):
             return False
         return True
+    
