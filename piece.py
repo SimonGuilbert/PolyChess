@@ -1,3 +1,7 @@
+#On suppose que la configuration de l'echiquier est 8x8
+#On utilise ici que les index
+
+
 class Piece:
     
     def __init__(self,nom='',couleur=''):
@@ -56,8 +60,11 @@ class Piece:
         ou manger une piece ennemie à gauche ou à droite en diagonale, tant que les cases sont vides
         Retourne la liste des positions possibles
         '''
+        for t in range(len(self.tab120)):
+            if self.tab120[t] == position:
+                pos_120=t
         #Recuperation de la longeur de la ligne
-        ligne = 8 
+        ligne = 7 
 
         #Numero du tour (initial=1) Doit etre recuperer
         nb_tours= 1
@@ -67,41 +74,47 @@ class Piece:
         if self.couleur == 'blanc':
             #Tour initial
             if nb_tours == 1:
-                position_possible += [position-2*ligne,position-ligne,position-ligne+1,position-ligne-1]
+                position_possible += [position-2*ligne,position-ligne]
             #Tours suivants
             else:
-                for i in [-1,0,1]:
-                    #Si les cases devant lui sont vides
-                    if self.echiquier.estVide(position-ligne+i):
-                        position_possible += [position-ligne+i]
+                for i in [-1,1]:
+                    if self.tab120[pos_120-ligne+i]!=-1:
+                        #Si les cases devant lui sont vides
+                        if self.echiquier.estVide(self.tab120[pos_120-ligne+i]):
+                            position_possible += [self.tab120[pos_120-ligne+i]]
         #Pion noir
         if self.couleur == 'noir':
             if nb_tours == 1:
                 #Tour initial
-                position_possible += [position+2*ligne,position+ligne,position+ligne+1,position+ligne-1]
+                position_possible += [position+2*ligne,position+ligne]
             #Tours suivants
             else:
-                for i in [-1,0,1]:
-                    #Si les cases devant lui sont vides
-                    if self.echiquier.estVide(position+ligne+i):
-                        position_possible += [position+ligne+i]
-        return position_possible    
+                for i in [-1,1]:
+                    if self.tab120[pos_120+ligne+i]!=-1:
+                        #Si les cases devant lui sont vides
+                        if self.echiquier.estVide(self.tab120[pos_120+10+i]):
+                            position_possible += [self.tab120[pos_120+10+i]]
+        return position_possible
 
     def mvmt_roi(self,position):
         '''
         Le roi peut potentiellemnt avancer d'une case autout de lui-meme, tant que les cases sont vides
         Retourne la liste des positions possibles
         '''
+        for t in range(len(self.tab120)):
+            if self.tab120[t] == position:
+                pos_120=t
         #Recuperation de la longeur de la ligne
-        ligne =8
+        ligne =10
         #Initialisation de la liste des positions
         position_possibles=[]
         #Creation de la liste des positions possibles
-        for k in range(3): #Indice vertical
-            for i in range(3): #Indice horizontal
-                #si les cases autour de lui sont vides
-                if self.echiquier.estVide(position-k*ligne-i):
-                    position_possibles+=[position-k*ligne-i]
+        for k in [-1,0,1]: #Indice vertical
+            for i in [-1,0,1]: #Indice horizontal
+                if self.tab120[pos_120-k*ligne-i]!=-1:
+                    #si les cases autour de lui sont vides
+                    if self.echiquier.estVide(self.tab120[pos_120-k*ligne-i]):
+                        position_possibles+=[self.tab120[pos_120-k*ligne-i]]
         return position_possibles
             
     def mvmt_cavalier(self,position):
@@ -121,18 +134,14 @@ class Piece:
         for k in [-2,2]: #Indice vertical
             for i in [-1,1]: #Indice horizontal
                 if self.tab120[pos_120+k*ligne+i]!=-1:
-                    print('hello',pos_120,pos_120+k*ligne+i)
                     # Si les cases sont vides
                     if self.echiquier.estVide(self.tab120[pos_120+k*ligne+i]):
-                        print('vide',self.tab120[pos_120+k*ligne+i])
                         position_possibles+=[self.tab120[pos_120+k*ligne+i]]
         for k in [-1,1]: #Indice vertical
             for i in [-2,2]: #Indice horizontal
                 # Si les cases sont vides
                 if self.tab120[pos_120+k*ligne+i]!=-1:
-                    print('blabla',pos_120,pos_120+k*ligne+i)
                     if self.echiquier.estVide(self.tab120[pos_120+k*ligne+i]):
-                        print('vide',self.tab120[pos_120+k*ligne+i])
                         position_possibles+=[self.tab120[pos_120+k*ligne+i]]
         return position_possibles
     
@@ -141,26 +150,36 @@ class Piece:
         La tour se déplace d'autant de cases voulue devant, derriere, a droite ou a gauche, tant que les cases sont vides
         Retourne la liste des positions possibles
         '''
+        for t in range(len(self.tab120)):
+            if self.tab120[t] == position:
+                pos_120=t
         #Recuperation de la longeur de la ligne
-        len_ligne = 8
-        #Calcule numero de ligne sur lequel est la tour
-        ligne=position//len_ligne+1
-        #Initialisation de la liste des positions possibles
+        ligne = 10
         position_possibles=[]
+        i=1
         #Ajout des cases a l'horizontale
-        for i in range(len_ligne):
-            # Si les cases sont vides
-            if self.echiquier.estVide((ligne-1)*len_ligne+i):
-                position_possibles += [(ligne-1)*len_ligne+i]
+        while self.tab120[pos_120+i]!=-1:
+            if self.echiquier.estVide(self.tab120[pos_120+i]):
+                position_possibles += [self.tab120[pos_120+i]]
+            i=i+1
+        i=1
+        while self.tab120[pos_120-i]!=-1:
+            if self.echiquier.estVide(self.tab120[pos_120-i]):
+                position_possibles += [self.tab120[pos_120-i]]
+            i=i+1
         #Ajout des cases a la verticale
-        for k in range(ligne):
+        i=1
+        while self.tab120[pos_120+i*ligne]!=-1:
             # Si les cases sont vides
-            if self.echiquier.estVide(position-k*len_ligne):
-                position_possibles += [position-k*len_ligne]
-        for k in range(ligne,len_ligne):
+            if self.echiquier.estVide(self.tab120[pos_120+i*ligne]):
+                position_possibles += [self.tab120[pos_120+i*ligne]]
+            i=i+1
+        i=1
+        while self.tab120[pos_120-i*ligne]!=-1:
             # Si les cases sont vides
-            if self.echiquier.estVide(position+k*len_ligne):
-                position_possibles += [position+k*len_ligne]
+            if self.echiquier.estVide(self.tab120[pos_120-i*ligne]):
+                position_possibles += [self.tab120[pos_120-i*ligne]]
+            i=i+1
         return position_possibles
         
     def mvmt_fou(self,position):
