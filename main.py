@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Dec  2 18:32:45 2019
+Created on Wed Jan  8 08:01:54 2020
 
+@author: guillyd
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Dec  2 18:32:45 2019
 @author: Jonathan Molieres
 """
 
@@ -11,7 +17,7 @@ Created on Mon Dec  2 18:32:45 2019
 # =============================================================================
 
 # import des classes
-from echiquier import Echiquier8x8
+from Echiquier import Echiquier8x8
 print("Jeux d'echec , exit permet d'arreter le jeux ")
       
 if  __name__=='__main__':
