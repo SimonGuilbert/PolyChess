@@ -21,6 +21,8 @@ from Echiquier import Echiquier8x8
 print("Jeux d'echec , exit permet d'arreter le jeux ")
       
 if  __name__=='__main__':
+    print("Entrer 1v1 pour jouer contre un humain et ia pour jouer contre l'ordinateur")  
+    input("choix : ")
     ech=Echiquier8x8()
     '''boucle infini pour le jeux d'échec'''
     while True:
