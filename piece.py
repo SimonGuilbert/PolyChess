@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 27 17:08:54 2019
-
-@author: guillyd
-"""
-
-
-#On suppose que la configuration de l'echiquier est 8x8
-#On utilise ici que les index
-
 class Piece:
     
     def __init__(self,nom='',couleur=''):
@@ -56,7 +45,7 @@ class Piece:
         return self.cimetiere
 
     #setter
-    def echiquier(self,Echiquier):
+    def impEchiquier(self,Echiquier):
         self.echiquier=Echiquier
 # =============================================================================
 # Definition des mouvemements possibles
@@ -83,7 +72,7 @@ class Piece:
             else:
                 for i in [-1,0,1]:
                     #Si les cases devant lui sont vides
-                    if self.echiquier.estVIDE(position-ligne+i):
+                    if self.echiquier.estVide(position-ligne+i):
                         position_possible += [position-ligne+i]
         #Pion noir
         if self.couleur == 'noir':
@@ -94,7 +83,7 @@ class Piece:
             else:
                 for i in [-1,0,1]:
                     #Si les cases devant lui sont vides
-                    if self.echiquier.estVIDE(position+ligne+i):
+                    if self.echiquier.estVide(position+ligne+i):
                         position_possible += [position+ligne+i]
         return position_possible    
 
@@ -105,14 +94,15 @@ class Piece:
         '''
         #Recuperation de la longeur de la ligne
         ligne =8
-
+        #Initialisation de la liste des positions
+        position_possibles=[]
         #Creation de la liste des positions possibles
         for k in range(3): #Indice vertical
             for i in range(3): #Indice horizontal
                 #si les cases autour de lui sont vides
-                if self.echiquier.estVIDE(position-k*ligne-i):
-                    position_possible+=[position-k*ligne-i]
-        return position_possible
+                if self.echiquier.estVide(position-k*ligne-i):
+                    position_possibles+=[position-k*ligne-i]
+        return position_possibles
             
     def mvmt_cavalier(self,position):
         '''
@@ -121,18 +111,20 @@ class Piece:
         '''
         #Recuperation de la longeur de la ligne
         ligne =8
+        #Initialisation de la liste des positions
+        position_possibles=[]
         #Creation de la liste des positions possibles
         for k in [-2,2]: #Indice vertical
             for i in [-1,1]: #Indice horizontal
                 # Si les cases sont vides
-                if self.echiquier.estVIDE(position-k*ligne-i):
-                    position_possible+=[position-k*ligne-i]
+                if self.echiquier.estVide(position-k*ligne-i):
+                    position_possibles+=[position-k*ligne-i]
         for k in [-1,1]: #Indice vertical
             for i in [-2,2]: #Indice horizontal
                 # Si les cases sont vides
-                if self.echiquier.estVIDE(position-k*ligne-i):
-                    position_possible+=[position-k*ligne-i]
-        return position_possible
+                if self.echiquier.estVide(position-k*ligne-i):
+                    position_possibles+=[position-k*ligne-i]
+        return position_possibles
     
     def mvmt_tour(self,position):
         '''
@@ -181,8 +173,8 @@ class Piece:
             #Au max on peut se deplacer de 8 cases sur la vertical
             for k in range(len_ligne):
                 #Si les cases sont vides
-                if self.echiquier.estVIDE(position-ligne*k+i):
-                    position_posibles+=[position-ligne*k+i]
+                if self.echiquier.estVide(position-ligne*k+i):
+                    position_possibles+=[position-ligne*k+i]
                 #Deplacement sur la colonne suivante a droite
                 i=i+1
         #Ajout des cases sur la diagonale de la position vers le coin en bas droit
@@ -192,8 +184,8 @@ class Piece:
             #Au max on peut se deplacer de 8 cases sur la vertical
             for k in range(len_ligne):
                     #Si les cases sont vides
-                    if self.echiquier.estVIDE(position+ligne*k+i):
-                        position_posibles+=[position+ligne*k+i]
+                    if self.echiquier.estVide(position+ligne*k+i):
+                        position_possibles+=[position+ligne*k+i]
                     #Deplacement sur la colonne suivante a droite
                     i=i+1
         #Ajout des cases sur la diagonale de la position vers le coin en haut gauche
@@ -203,8 +195,8 @@ class Piece:
             #Au max on peut se deplacer de 8 cases sur la vertical
             for k in range(len_ligne):
                     #Si les cases sont vides
-                    if self.echiquier.estVIDE(position-ligne*k-i):
-                        position_posibles+=[position-ligne*k-i]
+                    if self.echiquier.estVide(position-ligne*k-i):
+                        position_possibles+=[position-ligne*k-i]
                     #Deplacement sur la colonne suivante a gauche
                     i=i-1
         #Ajout des cases sur la diagonale de la position vers le coin en bas gauche
@@ -214,11 +206,13 @@ class Piece:
             #Au max on peut se deplacer de 8 cases sur la vertical
             for k in range(len_ligne):
                     #Si les cases sont vides
-                    if self.echiquier.estVIDE(position+ligne*k-i):
-                        position_posibles+=[position+ligne*k-i]
+                    if self.echiquier.estVide(position+ligne*k-i):
+                        position_possibles+=[position+ligne*k-i]
                     #Deplacement sur la colonne suivante a gauche
                     i=i-1
         return position_possibles
     
     def mvmt_dame(self,position):
         return self.mvmt_tour(position)+self.mvmt_fou(position)
+    
+        
