@@ -150,7 +150,7 @@ class Echiquier8x8:
             return iPosNouvelle in piece.mvmt_cavalier(iPosInitial)
         if piece.getNom()=='ROI':
             return iPosNouvelle in piece.mvmt_roi(iPosInitial)
-        if self.isVide(iPosInitial)=='':
+        if self.estVide(iPosInitial):
             return False
         return True
     
