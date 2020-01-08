@@ -40,6 +40,29 @@ class Echiquier8x8:
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
         Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
         ]
+        for i in self.echiquier:
+            i.impEchiquier(self)
+#            
+#            
+#        for i  in range(len( self.echiquier)-10):    
+#            print(i)
+#            positionPossible=[]
+#            # verfication du coup joue par rapport a tous les coups possibles de la piece
+#            if self.echiquier[i].getNom()=='TOUR':
+#                positionPossible+=self.echiquier[i].mvmt_tour(i)
+#            if self.echiquier[i].getNom()=='pion':
+#                 positionPossible+=self.echiquier[i].mvmt_pion(i)
+#            if self.echiquier[i].getNom()=='CAVALIER':
+#                positionPossible+=self.echiquier[i].mvmt_cavalier(i)
+#            if self.echiquier[i].getNom()=='ROI':
+#                positionPossible+=self.echiquier[i].mvmt_roi(i)
+#            if self.echiquier[i].getNom()=='FOU':
+#                positionPossible+=self.echiquier[i].mvmt_fou(i)
+#            if self.echiquier[i].getNom()=='DAME':
+#                positionPossible+=self.echiquier[i].mvmt_dame(i)
+#        self.echiquier[i].position=positionPossible
+#        
+        
         # Matrice d'affichage
         self.jeux=['--' for i in range(8*8) ] 
         # Variable qui determine les tours de jeux
@@ -150,6 +173,10 @@ class Echiquier8x8:
             return iPosNouvelle in piece.mvmt_cavalier(iPosInitial)
         if piece.getNom()=='ROI':
             return iPosNouvelle in piece.mvmt_roi(iPosInitial)
+        if piece.getNom()=='FOU':
+            return iPosNouvelle in piece.mvmt_fou(iPosInitial)
+        if piece.getNom()=='DAME':
+            return iPosNouvelle in piece.mvmt_dame(iPosInitial)
         if self.estVide(iPosInitial):
             return False
         return True
