@@ -151,7 +151,7 @@ class Piece:
             if self.echiquier.estVide((ligne-1)*len_ligne+i):
                 position_possibles += [(ligne-1)*len_ligne+i]
         #Ajout des cases a la verticale
-        for k in range(,ligne):
+        for k in range(ligne):
             # Si les cases sont vides
             if self.echiquier.estVide(position-k*len_ligne):
                 position_possibles += [position-k*len_ligne]
