@@ -1,7 +1,3 @@
-#On suppose que la configuration de l'echiquier est 8x8
-#On utilise ici que les index
-
-
 class Piece:
     
     def __init__(self,nom='',couleur=''):
@@ -74,7 +70,7 @@ class Piece:
         if self.couleur == 'blanc':
             #Tour initial
             if nb_tours == 1:
-                position_possible = position_possible + [self.tab120[pos_120-ligne],self.tab120[pos_120-ligne*2]] + self.manger_pion(position,pos_120)
+                position_possible = position_possible + [self.tab120[pos_120-ligne],self.tab120[pos_120-ligne*2]]
             #Tours suivants
             else:
                 if self.tab120[pos_120-ligne]!=-1:
@@ -92,9 +88,9 @@ class Piece:
                     #Si les cases devant lui sont vides
                     if self.echiquier.estVide(self.tab120[pos_120+ligne]):
                         position_possible += [self.tab120[pos_120+ligne]]
-        return position_possible+self.manger_pion(position,pos_120)
+        return position_possible+self.manger_pion(pos_120)
     
-    def manger_pion(self,position,pos_120):
+    def manger_pion(self,pos_120):
         '''
         Permet de savoi si un pion peut manger une autre piece excepte un roi
         '''
@@ -259,10 +255,10 @@ class Piece:
             i=i+1
         #Ajout des cases sur la diagonale de la position vers le coin en bas droit
         i=1
-        while self.tab120[pos_120+i*ligne-i]!=-1:
+        while self.tab120[pos_120+i*ligne+i]!=-1:
             #Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120+i*ligne-i]):
-                position_possibles+=[self.tab120[pos_120+i*ligne-i]]
+            if self.echiquier.estVide(self.tab120[pos_120+i*ligne+i]):
+                position_possibles+=[self.tab120[pos_120+i*ligne+i]]
             else:
                 break
             i=i+1
@@ -292,5 +288,3 @@ class Piece:
         Retourne la liste des positions possibles
         '''
         return self.mvmt_tour(position)+self.mvmt_fou(position)
-    
-        
