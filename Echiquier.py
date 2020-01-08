@@ -274,5 +274,10 @@ class Echiquier8x8:
             self.echiquier[2]=self.echiquier[4]
             self.echiquier[4]=Piece()
             self.echiquier[0]=Piece()
+            
+        else :
+            print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+            
+        
         
    
