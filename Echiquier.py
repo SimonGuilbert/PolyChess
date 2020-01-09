@@ -159,7 +159,7 @@ class Echiquier8x8:
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_tour(iPosNouvelle)
             elif self.echiquier[iPosNouvelle].getNom()=='PION':
                  positionPossible+=self.echiquier[iPosNouvelle].mvmt_pion(iPosNouvelle)
-                 if posNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
+                 if iPosNouvelle in [i for i in range(8)] or iPosNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
                     self.promotion(posNouvelle) 
             elif self.echiquier[iPosNouvelle].getNom()=='CAVALIER':
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_cavalier(iPosNouvelle)
@@ -249,7 +249,6 @@ class Echiquier8x8:
                 if piece.getCouleur()=='noir' and piece.getNom()=='ROI':
                     ListeCoupsRoiNoir=piece.position
                     break
-                print(ListeCoupsRoiNoir)
             if ListeCoupsRoiNoir!=[]:
                 ListeBlanc=self.coupsPossibleBlanc()
                 for i in ListeBlanc:
@@ -309,10 +308,5 @@ class Echiquier8x8:
             self.echiquier[0]=Piece()
         else :
             print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
-        
-        
-        
-        
-
-        
+ 
         
