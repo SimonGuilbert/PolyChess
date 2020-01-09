@@ -11,14 +11,14 @@ Created on Mon Dec  2 18:32:45 2019
 from time import sleep
 
 # import des classes
-from Echiquier import Echiquier8x8
+from Echiquier import Echiquier
 print("\n\033[4mJeux d'echecs, exit permet d'arrêter le jeu\033[0m")
       
 if  __name__=='__main__':
  
-    print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain 1et \033[31mia\033[0m pour jouer contre l'ordinateur")  
+    print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur")  
     choix = input("Choix du mode de jeu : ")
-    ech=Echiquier8x8()
+    ech=Echiquier()
     '''boucle infinie pour le jeux d'échec'''
     if choix == "1v1" :
         # Au début de la partie, aucun roi n'est en échec donc echec = False
