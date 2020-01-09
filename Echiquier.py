@@ -8,6 +8,8 @@ Created on Tue Dec  3 10:43:15 2019
 from time import sleep #permet d'attendre la lecture au joueur en cas d'une erreur de coups 
 from piece import Piece
 
+
+
 # =============================================================================
 # Classe de l'echiquier avec les regles associees 
 # =============================================================================
@@ -81,7 +83,13 @@ class Echiquier8x8:
 #        '''passer de la piece  a l'index'''
 #        return self.echiquier.index(piece)
     
-    
+    def changementDeCouleur(self):
+        print(self.tourJoueur)
+        if self.tourJoueur=='blanc':
+            self.tourJoueur='noir'
+        else:
+            self.tourJoueur= 'blanc'
+        print(self.tourJoueur)
     def matriceJeux(self):
         '''remplissage de la matrice d 'affichage'''
         for index in range(len(self.echiquier)):
@@ -102,7 +110,7 @@ class Echiquier8x8:
                 self.jeux[index]='--'
         
     def __str__(self):
-        '''fonction d'affichage du jeux d'echec  '''
+        ''' fonction d'affichage du jeux d'echec '''
         
         self.matriceJeux()  
         affichage='   a  b  c  d  e  f  g  h'+'\n'
@@ -141,7 +149,7 @@ class Echiquier8x8:
         
         iPosInitial=self.conversionEnIndex(posInitial)
         iPosNouvelle=self.conversionEnIndex(posNouvelle)
-        if self.regleSimple(iPosInitial,iPosNouvelle):
+        if self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur():
             
             self.echiquier[iPosNouvelle]=self.echiquier[iPosInitial]
             self.echiquier[iPosInitial]=Piece()
@@ -168,6 +176,7 @@ class Echiquier8x8:
                     self.cimetiereBlanc.append(self.echiquier[iPosNouvelle])
                 else:
                     self.cimetiereNoir.append(self.echiquier[iPosNouvelle])
+            self.changementDeCouleur()
         else:
             
             print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
@@ -223,12 +232,21 @@ class Echiquier8x8:
 # =============================================================================
 # Echec Et echec et mat
 # =============================================================================
+#    def changementDeEchiquier(self):
+#        
+#    def echecEtMat(self):
+#        tablebase = chess.syzygy.open_tablebase("data/syzygy/regular")
+#        with chess.syzygy.open_tablebase("data/syzygy/regular") as tablebase:
+#            board = chess.Board("8/2K5/4B/3N4/8/8/4k3/8 b - - 0 1")
+#           
+#            print(tablebase.probe_wdl(board))
+            
     def echec(self):
         
         if self.tourJoueur=='blanc':
             ListeCoupsRoiNoir=[]
             for piece in self.echiquier:
-                if piece.getCouleur=='noir' and piece.getNom=='ROI':
+                if piece.getCouleur()=='noir' and piece.getNom()=='ROI':
                     ListeCoupsRoiNoir=piece.position
             if ListeCoupsRoiNoir!=[]:
                 ListeBlanc=self.coupsPossibleBlanc()
@@ -239,7 +257,7 @@ class Echiquier8x8:
         else:
             ListeCoupsRoiBlanc=[]
             for piece in self.echiquier:
-                if piece.getCouleur=='blanc' and piece.getNom=='ROI':
+                if piece.getCouleur()=='blanc' and piece.getNom()=='ROI':
                     ListeCoupsRoiBlanc=piece.position
             ListeNoir=self.coupsPossibleNoir()
             if ListeCoupsRoiBlanc!=[]:
@@ -247,7 +265,8 @@ class Echiquier8x8:
                     if i in ListeCoupsRoiBlanc:
                         ListeCoupsRoiBlanc.remove(i)
                 return len(ListeCoupsRoiBlanc)
-            return -1
+        return -1
+
 
 # =============================================================================
 # Coups spéciaux
@@ -288,4 +307,10 @@ class Echiquier8x8:
             self.echiquier[0]=Piece()
         else :
             print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+        
+        
+        
+        
+
+        
         
