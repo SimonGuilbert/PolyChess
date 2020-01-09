@@ -13,7 +13,7 @@ from piece import Piece
 # =============================================================================
 # Classe de l'echiquier avec les regles associees 
 # =============================================================================
-class Echiquier8x8:
+class Echiquier:
     '''classe qui represente l'echiquier de norme 8 x 8 '''
     # Constructor
     def __init__(self):
