@@ -13,7 +13,7 @@ from piece import Piece
 # =============================================================================
 # Classe de l'echiquier avec les regles associees 
 # =============================================================================
-class Echiquier8x8:
+class Echiquier:
     '''classe qui represente l'echiquier de norme 8 x 8 '''
     # Constructor
     def __init__(self):
@@ -159,8 +159,8 @@ class Echiquier8x8:
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_tour(iPosNouvelle)
             elif self.echiquier[iPosNouvelle].getNom()=='PION':
                  positionPossible+=self.echiquier[iPosNouvelle].mvmt_pion(iPosNouvelle)
-                 if iPosNouvelle in [i for i in range(8)] or iPosNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
-                    self.promotion(posNouvelle) 
+                 if iPosNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
+                    self.promotion(iPosNouvelle) 
             elif self.echiquier[iPosNouvelle].getNom()=='CAVALIER':
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_cavalier(iPosNouvelle)
             elif self.echiquier[iPosNouvelle].getNom()=='ROI':
@@ -248,7 +248,6 @@ class Echiquier8x8:
             for piece in self.echiquier:
                 if piece.getCouleur()=='noir' and piece.getNom()=='ROI':
                     ListeCoupsRoiNoir=piece.position
-                    break
             if ListeCoupsRoiNoir!=[]:
                 ListeBlanc=self.coupsPossibleBlanc()
                 for i in ListeBlanc:
@@ -308,5 +307,3 @@ class Echiquier8x8:
             self.echiquier[0]=Piece()
         else :
             print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
- 
-        
