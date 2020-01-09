@@ -315,4 +315,7 @@ class Piece:
         '''
         return self.mvmt_tour(position)+self.mvmt_fou(position)
     
-        
+#        
+#    def positionpossibles(self):
+#        if self.getNom == 'PION':
+#            return self.mvmt_pion(self.position)

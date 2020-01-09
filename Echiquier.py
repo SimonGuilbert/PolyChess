@@ -13,7 +13,7 @@ from piece import Piece
 # =============================================================================
 # Classe de l'echiquier avec les regles associees 
 # =============================================================================
-class Echiquier:
+class Echiquier8x8:
     '''classe qui represente l'echiquier de norme 8 x 8 '''
     # Constructor
     def __init__(self):
@@ -77,8 +77,10 @@ class Echiquier:
         self.cimetiereNoir=[]
         
     def conversionEnIndex(self,position): 
-        '''passer de coordonnees en index'''
-        return self.coordonnees.index(position)
+        '''passer de coordonnees en index 
+        ex: a8 =>0
+        '''
+        return self.coordonnees.index(position)   
 #    def pieceDeIndex(self,piece):
 #        '''passer de la piece  a l'index'''
 #        return self.echiquier.index(piece)
@@ -159,7 +161,7 @@ class Echiquier:
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_tour(iPosNouvelle)
             elif self.echiquier[iPosNouvelle].getNom()=='PION':
                  positionPossible+=self.echiquier[iPosNouvelle].mvmt_pion(iPosNouvelle)
-                 if iPosNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
+                 if iPosNouvelle in [i for i in range(8)] or iPosNouvelle in [i for i in range(56,64)]:#verifiaction si il y a promotion
                     self.promotion(iPosNouvelle) 
             elif self.echiquier[iPosNouvelle].getNom()=='CAVALIER':
                 positionPossible=self.echiquier[iPosNouvelle].mvmt_cavalier(iPosNouvelle)
@@ -248,6 +250,8 @@ class Echiquier:
             for piece in self.echiquier:
                 if piece.getCouleur()=='noir' and piece.getNom()=='ROI':
                     ListeCoupsRoiNoir=piece.position
+                    break
+                print(ListeCoupsRoiNoir)
             if ListeCoupsRoiNoir!=[]:
                 ListeBlanc=self.coupsPossibleBlanc()
                 for i in ListeBlanc:
@@ -307,3 +311,10 @@ class Echiquier:
             self.echiquier[0]=Piece()
         else :
             print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+        
+        
+        
+        
+
+        
+        
