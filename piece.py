@@ -7,7 +7,7 @@ class Piece:
         
         self.nom = nom
         self.couleur = couleur
-        self.position=[]
+        self.Lposition=[]
         self.valeur=0
         self.tour=1
         
