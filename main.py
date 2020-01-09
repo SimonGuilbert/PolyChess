@@ -21,13 +21,15 @@ if  __name__=='__main__':
     ech=Echiquier8x8()
     '''boucle infinie pour le jeux d'échec'''
     if choix == "1v1" :
-        while True:
+        # Au début de la partie, aucun roi n'est en échec donc echec = False
+        echec = False
+        while True:  
             ech.__str__()
-           
             print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
                   "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
                   "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
-            mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
+            if echec == False :
+                mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')        
             if mouvement  == 'historique':
                 ech.affichageHistorique()
             elif len(mouvement)==7:
@@ -42,17 +44,18 @@ if  __name__=='__main__':
                     break
                 else:
                     try:
-                        ech.deplacer(mouvement[:2],mouvement[2:])
-                        
-#                        nbPosRoi=ech.echec()
-#                        if nbPosRoi!=0 and nbPosRoi!=-1:
-#                            print('echec')
+                        ech.deplacer(mouvement[:2],mouvement[2:]) 
+                        nbPosRoi=ech.echec()
+                        if nbPosRoi!=0 and nbPosRoi!=-1:
+                            echec = True
+                            mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
+                            #ajouter code ici pour le cas echec        
                     except:
                         print("\033[31mCommande non valide. Veuillez Recommencer2\033[0m")              
                         sleep(2)    
             else:
                 print("\033[31mCommande non valide. Veuillez Recommencer3\033[0m")
-                sleep(2)
-            
+                sleep(2)            
+    
     elif choix == "ia" :
         print("Le mode de jeu contre une intelligence artificielle n'est pas encore disponible")
