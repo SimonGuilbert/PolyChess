@@ -7,97 +7,111 @@ Created on Thu Jan  9 10:21:41 2020
 import chess
 import chess.polyglot
 from random import randint
-
+from Echiquier import Echiquier8x8
 class IA :
+    '''
+    Classe gerant l'intellignece artificielle
+    Attention : necesitte le module chess (commande: pip install python-chess)
+    '''
+#    def __init__(self):
+#        ech=Echiquier8x8()
+#    
+#    def impEchiquier(self,Echiquier):
+#        self.echiquier=Echiquier    
     
-        def impEchiquier(self,Echiquier):
-            '''
-            Importer l'echiquier
-            '''
-            self.echiquier=Echiquier    
-    
-        def ouverture(self):
-            '''
-            Donne les coup d'ouverture posible a l'IA
-            '''
-            board = chess.Board()
-            hist=self.echiquier.historique
-            for k in hist:
-                if format(k)==str:
-                    move=chess.Move.from_uci(k)
-                    board.push(move)
-                    print(board)
-            
-            with chess.polyglot.open_reader("data/polyglot/performance.bin") as reader:   
-                Move=[]
-                Weight=[]
-                Learn=[]
-                maxi=0
-                i=0
-                ind_max=0
-                for entry in reader.find_all(board):
-                    #print(entry.move,entry.weight,entry.learn)
-                    Move+=[entry.move]
-                    Weight+=[entry.weight]
-                    Learn+=[entry.learn]
-                if Move==[]:
-                    return(None)
-                elif len(Move)==len(Weight):
-                    for w in Weight:
-                        if w>maxi:
+    def ouverture(self,hist):
+        '''
+        Donne les coup d'ouverture posible a l'IA
+        '''
+        board = chess.Board()
+        for k in hist:
+            mouvement=k[0]+k[1]
+            move=chess.Move.from_uci(mouvement)
+            board.push(move)
+        
+        with chess.polyglot.open_reader("data/polyglot/performance.bin") as reader:   
+            Move=[]
+            Weight=[]
+            Learn=[]
+            maxi=0
+            i=0
+            ind_max=0
+            for entry in reader.find_all(board):
+                #print(entry.move,entry.weight,entry.learn)
+                Move+=[entry.move]
+                Weight+=[entry.weight]
+                Learn+=[entry.learn]
+                #print('move',Move)
+            if Move==[]:
+                return(None)
+            elif len(Move)==len(Weight):
+                for w in Weight:
+                    if w>maxi:
+                        maxi=w
+                        ind_max=i
+                    elif w==maxi:
+                        if Learn[ind_max]<Learn[i]:
                             maxi=w
                             ind_max=i
-                        elif w==maxi:
-                            if Learn[ind_max]<Learn[i]:
-                                maxi=w
-                                ind_max=i
-                        i+=1
-                return(Move[ind_max])
-                
-        def evaluation(self):
-            echi=self.echiquier.get_echiquier()
-            score_blanc=0
-            score_noir=0
-            for piece in echi:
-                if piece.getCouleur == 'blanc':
-                    score_blanc+=piece.valeur()
-                elif piece.getCouleur == 'noir':
-                    score_noir+=piece.valeur()
-            return (score_blanc,score_noir)
-                
-        def middlegame(self):
-            '''
-            IA pour le milieu de la partie cad apres l'ouverture et avant la fin de la partie
-            '''
-            i=0
-            evalua=self.evaluation()
-            position_possibles=[]
-            meilleur_coup=[]
-            for piece in self.echiquier.get_echiquier():
-                if piece.getNom =='PION':
+                    i+=1
+            return(Move[ind_max])
+            
+    def evaluation(self):
+        ech=Echiquier8x8()
+        score_blanc=0
+        score_noir=0
+        for piece in ech.get_echiquier():
+            if piece.getCouleur() == 'blanc':
+                score_blanc+=piece.getvaleur()
+            elif piece.getCouleur() == 'noir':
+                score_noir+=piece.getvaleur()
+        return (score_blanc,score_noir)
+            
+    def middlegame(self):
+        '''
+        IA pour le milieu de la partie cad apres l'ouverture et avant la fin de la partie
+        '''
+        ech=Echiquier8x8()
+        i=0
+        evalua=self.evaluation()
+        meilleur_coup=[]
+        k=0
+        for piece in ech.get_echiquier():
+            if piece.getCouleur()=='noir':    
+                position_possibles=[]
+                if piece.getNom() =='PION':
                     position_possibles+=piece.mvmt_pion(i)
-                elif piece.getNom =='FOU':
+                elif piece.getNom() =='FOU':
                     position_possibles+=piece.mvmt_fou(i)
-                elif piece.getNom =='TOURS':
+                elif piece.getNom() =='TOURS':
                     position_possibles+=piece.mvmt_tour(i)
-                elif piece.getNom == 'CAVALIER':
+                elif piece.getNom() == 'CAVALIER':
                     position_possibles+=piece.mvmt_cavalier(i)
-                elif piece.getNom == 'DAME':
+                elif piece.getNom() == 'DAME':
                     position_possibles+=piece.mvmt_dame(i)
-                elif piece.getNom == 'ROI':
+                elif piece.getNom() == 'ROI':
                     position_possibles+=piece.mvmt_roi(i)
                 if position_possibles != []:
                     for move in position_possibles:
-                        new=self.echiquier.deplacer(i,move)
-                        if new.evaluation()[1]>=evalua[1]:
-                            meilleur_coup+=[piece,i,move]
+                        board=Echiquier8x8()
+                        dep=board.conversionEnCoord(i)
+                        arr=board.conversionEnCoord(move)
+                        board.tourJoueur=str(piece.getCouleur())
+                        board.deplacer(dep,arr)
+                        ech.__str__
+                        if self.evaluation()[1]>=evalua[1]:
+                            meilleur_coup+=[[piece,i,move]]
                 i+=1
-            if len(meilleur_coup)==1:
-                return(meilleur_coup[0])
-            else:
-                k=randint(0,len(meilleur_coup))
-                return(meilleur_coup[k])
-            
+                
+        if len(meilleur_coup)==1:
+            return(meilleur_coup[0])
+        else:
+            max_rand=len(meilleur_coup)-1
+            k=randint(0,(max_rand)) 
+            depla=str(ech.conversionEnCoord(meilleur_coup[k][1]))+str(ech.conversionEnCoord(meilleur_coup[k][2]))
+            print(depla)
+            return(depla)
+        
  
 
 # =============================================================================
@@ -105,6 +119,16 @@ class IA :
 # =============================================================================
 #board = chess.Board()
 #move=chess.Move.from_uci("c2c4")
+#board.push(move)
+#move=chess.Move.from_uci("g8f6")
+#board.push(move)
+#move=chess.Move.from_uci("d2d4")
+#board.push(move)
+#move=chess.Move.from_uci("e7e6")
+#board.push(move)
+#move=chess.Move.from_uci("g1f3")
+#board.push(move)
+#move=chess.Move.from_uci("d7d5")
 #board.push(move)
 #print(board)
 #

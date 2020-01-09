@@ -78,7 +78,7 @@ if  __name__=='__main__':
                     try: 
                         ech.roque(mouvement[-2:])
                     except:
-                        print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")
+                        print("\033[31mCommande non valide. Veuillez Recommencer11\033[0m")
                         sleep(2)
                         
                 elif len(mouvement)==4:
@@ -88,23 +88,41 @@ if  __name__=='__main__':
                         try:
                             ech.deplacer(mouvement[:2],mouvement[2:]) 
                             nbPosRoi=ech.echec()
+                            tours+=1
                             if nbPosRoi!=0 and nbPosRoi!=-1:
                                 echec = True
                                 mouvement=input("Vous êtes en échec. A l'IA de jouer (exit permet de quitter) : ")
-                                #ajouter code ici pour le cas echec  
+                                #ajouter code ici pour le cas echec            
                         except:
-                            print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+                            print("\033[31mCommande non valide. Veuillez Recommencer21\033[0m")
                             sleep(2)
                 else:
-                    print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
+                    print("\033[31mCommande non valide. Veuillez Recommencer31\033[0m")
                     sleep(2)
-                tours+=1
             else:
+                hist=ech.get_historique()
                 print("\nA l'IA de jouer")
-#                if ia.ouverture()!= None:
-#                    mouvement=ia.ouverture()
-#                    ech.deplacer(mouvement[:2],mouvement[2:])
-                break
+
+                if ia.ouverture(hist)!= None:
+                    try:
+                        mouvement=str(ia.ouverture(hist))
+                        print('ouver',mouvement)
+                        ech.deplacer(mouvement[:2],mouvement[2:])
+                        tours+=1
+                    except:
+                        print("\033[31mCommande non valide. Veuillez Recommencer41\033[0m")
+                        sleep(2)
+                else:
+                    try:
+                       mouvement=ia.middlegame()
+                       ech.deplacer(mouvement[:2],mouvement[2:])
+                       tours+=1
+                    except:
+                        print("\033[31mCommande non valide. Veuillez Recommencer51\033[0m")
+                        sleep(2)
+                    
+                    
+
 
         
         
