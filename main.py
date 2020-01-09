@@ -41,10 +41,15 @@ if  __name__=='__main__':
                         break
                     else:
                         try:
-                            ech.deplacer(mouvement[:2],mouvement[2:]) 
+                            ech.deplacer(mouvement[:2],mouvement[2:])
+                            nbPosRoi=ech.echec()
+                            if nbPosRoi!=0 and nbPosRoi!=-1:
+                                print('echec')
                         except:
                             print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
                             sleep(2)
+                            
+                
                 else:
                     print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
                     sleep(2)
