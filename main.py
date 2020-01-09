@@ -29,7 +29,7 @@ if  __name__=='__main__':
                 mouvement=input('Entrer le mouvement (exit permet de quitter) : ')
                 if mouvement  == 'historique':
                     ech.affichageHistorique()
-                elif len(mouvement)==7:
+                elif len(mouvement)==7 and mouvement[:5] == "roque":
                     try: 
                         ech.roque(mouvement[-2:])
                     except:
