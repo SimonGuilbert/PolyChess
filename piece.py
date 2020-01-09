@@ -3,12 +3,10 @@ class Piece:
     def __init__(self,nom='',couleur=''):
         '''
         Une piece a un nom et une couleur.
-        cimetiere correspond aux pieces eliminees
         '''
         
         self.nom = nom
         self.couleur = couleur
-        self.cimetiere = []
         self.position=[]
         self.valeur=0
         self.tour=1
@@ -43,8 +41,6 @@ class Piece:
         return self.nom
     def getCouleur(self):
         return self.couleur
-    def getCimetiere(self):
-        return self.cimetiere
 
     #setter
     def impEchiquier(self,Echiquier):
@@ -315,7 +311,3 @@ class Piece:
         '''
         return self.mvmt_tour(position)+self.mvmt_fou(position)
     
-#        
-#    def positionpossibles(self):
-#        if self.getNom == 'PION':
-#            return self.mvmt_pion(self.position)
