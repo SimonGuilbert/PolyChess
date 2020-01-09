@@ -60,7 +60,6 @@ if  __name__=='__main__':
                 sleep(2)            
     
     elif choix == "ia" :
-        #print("Le mode de jeu contre une intelligence artificielle n'est pas encore disponible")
         # Au début de la partie, aucun roi n'est en échec donc echec = False
         tours=0
         echec = False
@@ -102,7 +101,7 @@ if  __name__=='__main__':
             else:
                 hist=ech.get_historique()
                 print("\nA l'IA de jouer")
-
+                #Bibliotheque d'ouverture
                 if ia.ouverture(hist)!= None:
                     try:
                         mouvement=str(ia.ouverture(hist))
@@ -112,6 +111,7 @@ if  __name__=='__main__':
                     except:
                         print("\033[31mCommande non valide. Veuillez Recommencer41\033[0m")
                         sleep(2)
+                #Suite du jeu 
                 else:
                     try:
                        mouvement=ia.middlegame()
@@ -120,16 +120,5 @@ if  __name__=='__main__':
                     except:
                         print("\033[31mCommande non valide. Veuillez Recommencer51\033[0m")
                         sleep(2)
-                    
-                    
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                #Fin a ajouter
+                
