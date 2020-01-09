@@ -248,6 +248,8 @@ class Echiquier8x8:
             for piece in self.echiquier:
                 if piece.getCouleur()=='noir' and piece.getNom()=='ROI':
                     ListeCoupsRoiNoir=piece.position
+                    break
+                print(ListeCoupsRoiNoir)
             if ListeCoupsRoiNoir!=[]:
                 ListeBlanc=self.coupsPossibleBlanc()
                 for i in ListeBlanc:

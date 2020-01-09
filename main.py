@@ -16,7 +16,7 @@ print("\n\033[4mJeux d'echecs, exit permet d'arrêter le jeu\033[0m")
       
 if  __name__=='__main__':
  
-    print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur")  
+    print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain 1et \033[31mia\033[0m pour jouer contre l'ordinateur")  
     choix = input("Choix du mode de jeu : ")
     ech=Echiquier8x8()
     '''boucle infinie pour le jeux d'échec'''
