@@ -3,13 +3,11 @@ class Piece:
     def __init__(self,nom='',couleur=''):
         '''
         Une piece a un nom et une couleur.
-        cimetiere correspond aux pieces eliminees
         '''
         
         self.nom = nom
         self.couleur = couleur
-        self.cimetiere = []
-        self.position=[]
+        self.Lposition=[]
         self.valeur=0
         self.tour=1
         
@@ -37,16 +35,23 @@ class Piece:
         71, 72, 73, 74, 75, 76, 77, 78,
         81, 82, 83, 84, 85, 86, 87, 88,
         91, 92, 93, 94, 95, 96, 97, 98
-        ) 
+        )
+
     #getter     
     def getNom(self):
         return self.nom
     def getCouleur(self):
         return self.couleur
-    def getCimetiere(self):
-        return self.cimetiere
     
-    def getvaleur(self):
+    def MAJPosition(self,L):
+        self.Lposition=L
+    def changementDeTour(self):
+        self.tour=2        
+    #setter
+    def impEchiquier(self,Echiquier):
+        self.echiquier=Echiquier
+        
+    def valeur(self):
         if self.nom=='PION':
             self.valeur=1
         elif self.nom=='FOU':
@@ -57,15 +62,7 @@ class Piece:
             self.valeur=5
         elif self.nom == 'DAME':
             self.valeur=9
-        elif self.nom == 'ROI':
-            self.valeur=0
         return self.valeur
-
-    #setter
-    def impEchiquier(self,Echiquier):
-        self.echiquier=Echiquier
-        
-
 # =============================================================================
 # Definition des mouvemements possibles
 # =============================================================================
@@ -94,7 +91,7 @@ class Piece:
                 if self.tab120[pos_120-ligne*2]!=-1:
                     if self.echiquier.estVide(self.tab120[pos_120-ligne*2]):
                         position_possible += [self.tab120[pos_120-ligne*2]]
-                self.tour=2
+#                self.tour=2
             #Tours suivants
             else:
                 if self.tab120[pos_120-ligne]!=-1:
@@ -111,7 +108,7 @@ class Piece:
                 if self.tab120[pos_120+ligne*2]!=-1:
                     if self.echiquier.estVide(self.tab120[pos_120+ligne*2]):
                         position_possible += [self.tab120[pos_120+ligne*2]]
-                self.tour=2
+#                self.tour=2
             #Tours suivants
             else:
                 if self.tab120[pos_120+ligne]!=-1:
@@ -319,7 +316,3 @@ class Piece:
         '''
         return self.mvmt_tour(position)+self.mvmt_fou(position)
     
-#        
-#    def positionpossibles(self):
-#        if self.getNom == 'PION':
-#            return self.mvmt_pion(self.position)
