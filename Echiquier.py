@@ -66,6 +66,8 @@ class Echiquier:
         return self.historique
     def get_echiquier(self):
         return self.echiquier
+    def get_TourJoueur(self):
+        return self.tourJoueur
     
     def conversionEnIndex(self,position): 
         '''passer de coordonnees en index 
@@ -259,8 +261,15 @@ class Echiquier:
                return True
         return False
     
-        
-        
+    def changementDeEchiquier(self):
+        pass
+    def echecEtMat(self):
+        tablebase = chess.syzygy.open_tablebase("data/syzygy/regular")
+        with chess.syzygy.open_tablebase("data/syzygy/regular") as tablebase:
+            board = chess.Board("8/2K5/4B/3N4/8/8/4k3/8 b - - 0 1")
+           
+            print(tablebase.probe_wdl(board))
+            
 # =============================================================================
 # mise a jour des deplacement possible
 # =============================================================================
@@ -301,13 +310,6 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-    
-        
-
-        
-        
-        
-        
-        
+     
         
         
