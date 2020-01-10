@@ -31,16 +31,7 @@ class Piece:
         return self.nom
     def getCouleur(self):
         return self.couleur
-    
-    def MAJPosition(self,L):
-        self.Lposition=L
-    def changementDeTour(self):
-        self.tour=2        
-    #setter
-    def impEchiquier(self,Echiquier):
-        self.echiquier=Echiquier
-        
-    def valeur(self):
+    def getvaleur(self):
         if self.nom=='PION':
             self.valeur=1
         elif self.nom=='FOU':
@@ -51,7 +42,18 @@ class Piece:
             self.valeur=5
         elif self.nom == 'DAME':
             self.valeur=9
+        elif self.nom == 'ROI':
+            self.valeur=0
         return self.valeur
+    
+    def MAJPosition(self,L):
+        self.Lposition=L
+    def changementDeTour(self):
+        self.tour=2        
+    #setter
+    def impEchiquier(self,Echiquier):
+        self.echiquier=Echiquier
+
 # =============================================================================
 # Definition des mouvemements possibles
 # =============================================================================
