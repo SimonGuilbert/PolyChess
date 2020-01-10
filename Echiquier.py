@@ -7,6 +7,8 @@ Created on Tue Dec  3 10:43:15 2019
 
 from time import sleep #permet d'attendre la lecture au joueur en cas d'une erreur de coups 
 from piece import Piece
+import chess
+import chess.syzygy
 
 
 
@@ -174,9 +176,11 @@ class Echiquier:
             self.changementDeCouleur()
             #defini les mouvements possible pour chaque pion
             self.mvtPossible()
-        else:
-            print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
-            sleep(2)
+    def testeDeplacer(self,posInitial,posNouvelle):
+        iPosInitial=self.conversionEnIndex(posInitial)
+        iPosNouvelle=self.conversionEnIndex(posNouvelle)
+        return self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur()
+            
 # =============================================================================
 # Fonctions de Verification des coups (moteur)
 # =============================================================================
@@ -310,5 +314,3 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-
-               
