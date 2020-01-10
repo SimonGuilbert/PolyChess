@@ -42,17 +42,21 @@ if  __name__=='__main__':
                 if mouvement=='exit': 
                     break
                 else:
-                
-                    ech.deplacer(mouvement[:2],mouvement[2:]) 
-                    BoolEchec=ech.echec()
-                    print('bool='+str(BoolEchec))
-                    if BoolEchec==True:
-                         mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
-                         ech.deplacer(mouvement[:2],mouvement[2:]) 
-                     
+                    
+                    if ech.testeDeplacer(mouvement[:2],mouvement[2:]):
+                        ech.deplacer(mouvement[:2],mouvement[2:]) 
+                        BoolEchec=ech.echec()
+                        print('bool='+str(BoolEchec))
+                        if BoolEchec==True:
+                             mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
+                             ech.deplacer(mouvement[:2],mouvement[2:]) 
+                    else:
+        
+                        print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
+                        sleep(2)
             else:
                 print("\033[31mCommande non valide. Veuillez Recommencer3\033[0m")
-                sleep(2)            
+                sleep(2)             
     
     elif choix == "ia" :
         # Au début de la partie, aucun roi n'est en échec donc echec = False
