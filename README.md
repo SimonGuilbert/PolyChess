@@ -15,7 +15,13 @@ Une fois le logiciel adéquat téléchargé, il suffit de :
 * Télécharger tous les fichiers python (main.py, Echiquier.py, piece.py, IA.py) présents sur ce dépôt 
 * Télécharger le dossier data présent sur ce dépôt
 * Enregistrer tous ces fichiers et le dossier data dans un même dossier sur un ordinateur
-* Vérifier que le dossier data contient bien le dossier polyglot qui contient 3 fichiers (lasker-trap.bin, performance.bin, SOURCE.txt)
+* Vérifier que le dossier data contient bien le dossier polyglot qui contient 3 fichiers 
+  * lasker-trap.bin 
+  * performance.bin
+  * SOURCE.txt
 * Ouvrir le fichier main.py avec le logiciel installé dans l'étape Installation
+* Entrer la commande pip install python-chess dans la console
+  * Si ça ne fonctionne pas, ouvrir l'application Anaconda Prompt
+  * Entrer la commande conda install python-chess
 * Exécuter le code main.py
 * Suivre les instructions de la console
