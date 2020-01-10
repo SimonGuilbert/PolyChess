@@ -114,11 +114,25 @@ if  __name__=='__main__':
                 #Suite du jeu 
                 else:
                     try:
-                       mouvement=ia.middlegame()
-                       ech.deplacer(mouvement[:2],mouvement[2:])
-                       tours+=1
+                        mouvement=ia.middlegame(hist,ech)
+                        print('middle',mouvement)
+                        ech.deplacer(mouvement[:2],mouvement[2:])
+                        tours+=1
                     except:
                         print("\033[31mCommande non valide. Veuillez Recommencer51\033[0m")
+                        break
                         sleep(2)
                 #Fin a ajouter
                 
+                    
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        

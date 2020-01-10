@@ -56,8 +56,8 @@ class IA :
                     i+=1
             return(Move[ind_max])
             
-    def evaluation(self):
-        ech=Echiquier8x8()
+    def evaluation(self,ech):
+        #ech=Echiquier8x8()
         score_blanc=0
         score_noir=0
         for piece in ech.get_echiquier():
@@ -67,14 +67,14 @@ class IA :
                 score_noir+=piece.getvaleur()
         return (score_blanc,score_noir)
             
-    def middlegame(self):
+    def middlegame(self,hist,ech):
         '''
         IA pour le milieu de la partie cad apres l'ouverture et avant la fin de la partie
         '''
-        ech=Echiquier8x8()
         i=0
-        evalua=self.evaluation()
+        evalua=self.evaluation(ech)
         meilleur_coup=[]
+        meme_coup=[]
         k=0
         for piece in ech.get_echiquier():
             if piece.getCouleur()=='noir':    
@@ -91,26 +91,33 @@ class IA :
                     position_possibles+=piece.mvmt_dame(i)
                 elif piece.getNom() == 'ROI':
                     position_possibles+=piece.mvmt_roi(i)
+                #print(piece.getNom(),position_possibles)
                 if position_possibles != []:
-                    for move in position_possibles:
+                    for move in position_possibles:   
                         board=Echiquier8x8()
+                        for h in hist:
+                            board.deplacer(h[0],h[1])    
                         dep=board.conversionEnCoord(i)
                         arr=board.conversionEnCoord(move)
                         board.tourJoueur=str(piece.getCouleur())
                         board.deplacer(dep,arr)
-                        ech.__str__
-                        if self.evaluation()[1]>=evalua[1]:
+                        #print('s',self.evaluation(board))
+                        if self.evaluation(board)[0]<evalua[0]:
                             meilleur_coup+=[[piece,i,move]]
-                i+=1
-                
+                            #print('helo')
+                        elif self.evaluation(board)[0]==evalua[0]:
+                            #print('bouh')
+                            meme_coup+=[[piece,i,move]]
+            i+=1
         if len(meilleur_coup)==1:
-            return(meilleur_coup[0])
-        else:
-            max_rand=len(meilleur_coup)-1
-            k=randint(0,(max_rand)) 
             depla=str(ech.conversionEnCoord(meilleur_coup[k][1]))+str(ech.conversionEnCoord(meilleur_coup[k][2]))
-            print(depla)
             return(depla)
+        else:
+            max_rand=len(meme_coup)-1
+            k=randint(0,(max_rand)) 
+            depla=str(ech.conversionEnCoord(meme_coup[k][1]))+str(ech.conversionEnCoord(meme_coup[k][2]))
+            return(depla)
+            
         
  
 
