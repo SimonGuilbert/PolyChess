@@ -26,7 +26,8 @@ if  __name__=='__main__':
             ech.__str__()
             print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
                   "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
-                  "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
+                  "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m\n\nPour afficher "+
+                  "l'historique des coups joués, entrer \033[31mhistorique\033[0m")
             if echec == False :
                 mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')        
             if mouvement  == 'historique':
@@ -59,7 +60,7 @@ if  __name__=='__main__':
                 print("\033[31mCommande non valide. Veuillez Recommencer3\033[0m")
                 sleep(2)            
     
-        elif choix == "ia" :
+    elif choix == "ia" :
         # Au début de la partie, aucun roi n'est en échec donc echec = False
         tours=0
         echec = False
@@ -68,7 +69,8 @@ if  __name__=='__main__':
             if ech.get_TourJoueur()=='blanc':
                 print("\nVous jouez avec les blancs.\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
                       "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
-                      "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
+                      "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m\n\nPour afficher "+
+                      "l'historique des coups joués, entrer \033[31mhistorique\033[0m")
                 if echec == False :
                     mouvement=input('A vous de jouer (exit permet de quitter) : ')        
                 if mouvement  == 'historique':
