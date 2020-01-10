@@ -3,24 +3,20 @@
 Created on Mon Dec  2 18:32:45 2019
 @author: Jonathan Molieres
 """
-
-
 # =============================================================================
 # Programme principale du jeux d'echec
 # =============================================================================
-from time import sleep
-
 # import des classes
-from Echiquier import Echiquier8x8
-from IA import IA
-print("\n\033[4mJeux d'echecs, exit permet d'arrêter le jeu\033[0m")
-      
+from Echiquier import Echiquier
+from time import sleep
+print('=============================================================================')
+print("                            Jeux d'echecs")
+print('=============================================================================')
 if  __name__=='__main__':
  
     print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain 1et \033[31mia\033[0m pour jouer contre l'ordinateur")  
     choix = input("Choix du mode de jeu : ")
-    ech=Echiquier8x8()
-    ia=IA()
+    ech=Echiquier()
     '''boucle infinie pour le jeux d'échec'''
     if choix == "1v1" :
         # Au début de la partie, aucun roi n'est en échec donc echec = False
@@ -37,6 +33,7 @@ if  __name__=='__main__':
             elif len(mouvement)==7:
                 try: 
                     ech.roque(mouvement[-2:])
+                    ech.changementDeCouleur()
                 except:
                     print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")
                     sleep(2)
@@ -45,16 +42,14 @@ if  __name__=='__main__':
                 if mouvement=='exit': 
                     break
                 else:
-                    try:
-                        ech.deplacer(mouvement[:2],mouvement[2:]) 
-                        nbPosRoi=ech.echec()
-                        if nbPosRoi!=0 and nbPosRoi!=-1:
-                            echec = True
-                            mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
-                            #ajouter code ici pour le cas echec        
-                    except:
-                        print("\033[31mCommande non valide. Veuillez Recommencer2\033[0m")              
-                        sleep(2)    
+                
+                    ech.deplacer(mouvement[:2],mouvement[2:]) 
+                    BoolEchec=ech.echec()
+                    print('bool='+str(BoolEchec))
+                    if BoolEchec==True:
+                         mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
+                         ech.deplacer(mouvement[:2],mouvement[2:]) 
+                     
             else:
                 print("\033[31mCommande non valide. Veuillez Recommencer3\033[0m")
                 sleep(2)            
@@ -123,16 +118,3 @@ if  __name__=='__main__':
                         break
                         sleep(2)
                 #Fin a ajouter
-                
-                    
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
