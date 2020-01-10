@@ -310,6 +310,5 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-     
-        
-        
+
+               
