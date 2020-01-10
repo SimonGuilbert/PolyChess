@@ -7,116 +7,132 @@ Created on Thu Jan  9 10:21:41 2020
 import chess
 import chess.polyglot
 from random import randint
-from Echiquier import Echiquier8x8
+from Echiquier import Echiquier
 class IA :
     '''
     Classe gerant l'intellignece artificielle
     Attention : necesitte le module chess (commande: pip install python-chess)
-    '''
-#    def __init__(self):
-#        ech=Echiquier8x8()
-#    
-#    def impEchiquier(self,Echiquier):
-#        self.echiquier=Echiquier    
+    '''  
     
     def ouverture(self,hist):
         '''
-        Donne les coup d'ouverture posible a l'IA
+        Donne le coup d'ouverture pour l'IA
         '''
+        #Cree un echiquier initial
         board = chess.Board()
+        #Ajoute les coups deja fait
         for k in hist:
             mouvement=k[0]+k[1]
             move=chess.Move.from_uci(mouvement)
             board.push(move)
-        
-        with chess.polyglot.open_reader("data/polyglot/performance.bin") as reader:   
+        #Ouvre la bibliotheque de polyglot
+        with chess.polyglot.open_reader("data/polyglot/performance.bin") as reader:
+            #Initialisation des variables
             Move=[]
             Weight=[]
             Learn=[]
             maxi=0
             i=0
             ind_max=0
+            #Recherche de tous les coups possibles
             for entry in reader.find_all(board):
-                #print(entry.move,entry.weight,entry.learn)
                 Move+=[entry.move]
                 Weight+=[entry.weight]
                 Learn+=[entry.learn]
-                #print('move',Move)
+            #Si il n'y a pas de coups possibles
             if Move==[]:
                 return(None)
+            #Verifie si les listes sont de meme taille
             elif len(Move)==len(Weight):
                 for w in Weight:
+                    #Si le poids est plus grand que celui enregistre
                     if w>maxi:
                         maxi=w
                         ind_max=i
                     elif w==maxi:
+                        #Utilisation de la 3eme variables pour detremine le meilleur coup
                         if Learn[ind_max]<Learn[i]:
                             maxi=w
                             ind_max=i
                     i+=1
             return(Move[ind_max])
             
-    def evaluation(self,ech):
-        #ech=Echiquier8x8()
+    def evaluation(self,echiquier):
+        '''
+        Permet d'evaluer une position de l'echiquier a partir des pieces presentes sur celui-ci  
+        '''
+        #Initialisation
         score_blanc=0
         score_noir=0
-        for piece in ech.get_echiquier():
+        #Parcours de toutes les pieces sur l'echiquier
+        for piece in echiquier.get_echiquier():
+            #Si la piece est blanche, on ajoute sa valeur au score des blancs
             if piece.getCouleur() == 'blanc':
                 score_blanc+=piece.getvaleur()
+            #Si la piece est noire, on ajoute sa valeur au score des noirs
             elif piece.getCouleur() == 'noir':
                 score_noir+=piece.getvaleur()
         return (score_blanc,score_noir)
             
     def middlegame(self,hist,ech):
         '''
-        IA pour le milieu de la partie cad apres l'ouverture et avant la fin de la partie
+        Donne le coup a joue pour l'IA en milieu de partie (cad apres l'ouverture et avant la fin de la partie)
         '''
-        i=0
+        #Initalisation
+        index=0
         evalua=self.evaluation(ech)
         meilleur_coup=[]
         meme_coup=[]
-        k=0
+        #Pour chaque piece de l'echiquier
         for piece in ech.get_echiquier():
             if piece.getCouleur()=='noir':    
                 position_possibles=[]
                 if piece.getNom() =='PION':
-                    position_possibles+=piece.mvmt_pion(i)
+                    position_possibles+=piece.mvmt_pion(index)
                 elif piece.getNom() =='FOU':
-                    position_possibles+=piece.mvmt_fou(i)
+                    position_possibles+=piece.mvmt_fou(index)
                 elif piece.getNom() =='TOURS':
-                    position_possibles+=piece.mvmt_tour(i)
+                    position_possibles+=piece.mvmt_tour(index)
                 elif piece.getNom() == 'CAVALIER':
-                    position_possibles+=piece.mvmt_cavalier(i)
+                    position_possibles+=piece.mvmt_cavalier(index)
                 elif piece.getNom() == 'DAME':
-                    position_possibles+=piece.mvmt_dame(i)
+                    position_possibles+=piece.mvmt_dame(index)
                 elif piece.getNom() == 'ROI':
-                    position_possibles+=piece.mvmt_roi(i)
-                #print(piece.getNom(),position_possibles)
+                    position_possibles+=piece.mvmt_roi(index)
+                #Si la piece peut bouger
                 if position_possibles != []:
+                    #Pour chacun des mouvements possibles de la piece
                     for move in position_possibles:   
-                        board=Echiquier8x8()
+                        #Creation d'un echiquier initial
+                        board=Echiquier()
+                        #Ajout des coups deja joues
                         for h in hist:
-                            board.deplacer(h[0],h[1])    
-                        dep=board.conversionEnCoord(i)
-                        arr=board.conversionEnCoord(move)
-                        board.tourJoueur=str(piece.getCouleur())
-                        board.deplacer(dep,arr)
-                        #print('s',self.evaluation(board))
+                            board.deplacer(h[0],h[1])  
+                        #Verification de la possiblite du coup puis deplacemnt de la piece avec
+                        #Conversion des index du mouvement en coordonnes
+                        if board.testeDeplacer(board.conversionEnCoord(index),board.conversionEnCoord(move)):
+                            board.deplacer(board.conversionEnCoord(index),board.conversionEnCoord(move)) 
+                        #Comparaison de evaluation de l'echiquier actuel avec l'ancien
                         if self.evaluation(board)[0]<evalua[0]:
-                            meilleur_coup+=[[piece,i,move]]
-                            #print('helo')
+                            #Si l'evaluation est meilleur, on garde ce mouvement
+                            meilleur_coup=[[piece,index,move]]
+                            evalua=self.evaluation(board)
+                        #Si aucun des coups est meilleur et ne fait pas changer l'evaluation 
                         elif self.evaluation(board)[0]==evalua[0]:
-                            #print('bouh')
-                            meme_coup+=[[piece,i,move]]
-            i+=1
+                            #alors on les ajoutent a meme_coup
+                            meme_coup+=[[piece,index,move]]
+            index+=1
+        #Si l'existe, deplacement selon le meilleurcoup     
+        print('m',meilleur_coup,len(meilleur_coup))
+        #print('M',meme_coup)
         if len(meilleur_coup)==1:
-            depla=str(ech.conversionEnCoord(meilleur_coup[k][1]))+str(ech.conversionEnCoord(meilleur_coup[k][2]))
-            return(depla)
+            print('ab')
+            #Retour le coup sur forme de coordonnes
+            return(str(ech.conversionEnCoord(meilleur_coup[0][1]))+str(ech.conversionEnCoord(meilleur_coup[0][2])))
+        #Sinon tirage au sort dans meme_coup
         else:
-            max_rand=len(meme_coup)-1
-            k=randint(0,(max_rand)) 
-            depla=str(ech.conversionEnCoord(meme_coup[k][1]))+str(ech.conversionEnCoord(meme_coup[k][2]))
-            return(depla)
+            k=randint(0,(len(meme_coup)-1)) 
+            return(str(ech.conversionEnCoord(meme_coup[k][1]))+str(ech.conversionEnCoord(meme_coup[k][2])))
             
         
  
