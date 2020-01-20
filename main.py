@@ -16,9 +16,11 @@ print("                            Jeux d'echecs")
 print('=============================================================================')
 if  __name__=='__main__':
     while True:
-        print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur. Pour quitter, entrer \033[31mquitter\033[0m.")  
+        print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur. Pour quitter, entrer \033[31mexit\033[0m.")  
         choix = input("Choix du mode de jeu : ")
         ech=Echiquier()
+        if choix == "exit" :
+            break
         if choix == "1v1" :
             # Au début de la partie, aucun roi n'est en échec donc echecEtMAt= False et echec =False
             EchecEtMat=False
