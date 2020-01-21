@@ -16,65 +16,118 @@ print("                            Jeux d'echecs")
 print('=============================================================================')
 if  __name__=='__main__':
     while True:
-        print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur. Pour quitter, entrer \033[31mquitter\033[0m.")  
+        print('=============================================================================')
+        print("                                 Menus")
+        print('=============================================================================')
+        print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur. Pour quitter, entrer \033[31mexit\033[0m.")  
         choix = input("Choix du mode de jeu : ")
-        ech=Echiquier()
+        ech=Echiquier()#créaction de l'échiquier en état initial
         if choix == "1v1" :
             # Au début de la partie, aucun roi n'est en échec donc echecEtMAt= False et echec =False
             EchecEtMat=False
             echec = False
-            # table de fin de jeux (syzygy)                
-            valeurEchec=ech.echecEtMat()    
-            if valeurEchec in [1,2]:
-                print('les'+str(ech.tourJoueur)+'ont gagnée')
-            if valeurEchec in [-1,-2]:
-                ech.changementDeCouleur()
-                print('les'+str(ech.tourJoueur)+'ont gagnée')
+            
                 
             while EchecEtMat==False:
-                 ech.__str__()#Fonction d'affichage
-                 EchecEtMat=ech.VerificationEchecEtMat()
-                 print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
+                
+                ech.__str__()#Fonction d'affichage
+                
+#                EchecEtMat=ech.VerificationEchecEtMat()
+#                print('echec et mat ='+str(EchecEtMat))
+                # table de fin de jeux (syzygy)                
+                valeurEchec=ech.echecEtMat()    
+                if valeurEchec in [1,2]:
+                    print('les'+str(ech.tourJoueur)+'ont gagnée')
+                if valeurEchec in [-1,-2]:
+                    ech.changementDeCouleur()
+                    print('les'+str(ech.tourJoueur)+'ont gagnée')
+                print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
                       "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
                       "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
-                
-                 if echec == False :
-                     mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
-                     if mouvement  == 'historique':
+                if echec == False :
+                    mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (\033[31mexit\033[0m permet de quitter) : ')
+                    if mouvement  == 'historique':
                         ech.affichageHistorique()
-                     elif len(mouvement)==7:
+                    elif len(mouvement)==7:
                          try: 
                              ech.roque(mouvement[-2:])
                              ech.changementDeCouleur()
                          except:
                              print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")
                              sleep(2)
-                     elif len(mouvement)==4:
+                    elif len(mouvement)==4:
                          if mouvement=='exit': 
                              break
                          else:
                              try:
                                  #appelle des fonction de deplacement
-                                 ech.deplacer(mouvement[:2],mouvement[2:]) 
-                                 BoolEchec=ech.echec()
-                                 if BoolEchec==True:
-                                     BoolEchDeplacement=False
-                                     while BoolEchDeplacement== False:
-                                         mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (exit permet de quitter) : ')
-                                         #si la variable est vrai alors le coup et validé et effecter 
-                                         BoolEchDeplacement=ech.deplacerEchec(mouvement[:2],mouvement[2:])
+                                 if ech.testeDeplacer(mouvement[:2],mouvement[2:]):
+                                     ech.deplacer(mouvement[:2],mouvement[2:]) 
+                                     BoolEchec=ech.echec()[0]
+                                     if BoolEchec==True:
+                                         ech.__str__()#Fonction d'affichage
+                                         BoolEchDeplacement=False
+                                         while BoolEchDeplacement== False:
+                                             mouvement=input('Vous êtes en échec. Aux '+str(ech.tourJoueur)+'s de jouer (\033[31mexit\033[0m permet de quitter) : ')
+                                             # boucle dans les cas ou une personnes est en echec
+                                             if mouvement  == 'historique':
+                                                ech.affichageHistorique()
+                                             
+                                             elif len(mouvement)==4:
+                                                 if mouvement=='exit':
+                                                     
+                                                     EchecEtMat=True  
+                                                     break
+                                                 else: 
+                                                     try:
+                                                        #echiquier fictif pour tester les coups
+                                                        echiquierTeste=Echiquier()
+                                                        echiquierTeste.chgtEchiquier(ech.echiquier)
+                                                        echiquierTeste.deplacementEchec(mouvement[:2],mouvement[2:])
+                                                        print('ici')
+                                                        if not echiquierTeste.echec()[0]:
+                                                            print('parici')
+                                                            ech.deplacer(mouvement[:2],mouvement[2:])
+                                                            print('la')
+                                                            ech.__str__()#Fonction d'affichage
+                                                            BoolEchDeplacement=True
+                                                            ech.changementDeCouleur()
+                                                            print('deplacement fait')
+                                                            
+                                                        else:
+                                                            print("deplacement non fait, \n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
+                                                            
+                                                     except:
+                                                         print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
+                                                         sleep(2)
+                                             elif len(mouvement)==7:
+                                                 try: 
+                                                     #completer avec echiquier fictif pour tester 
+                                                     ech.roque(mouvement[-2:])
+                                                     ech.changementDeCouleur()
+                                                 except:
+                                                     print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")
+                                                     sleep(2)
+                                             else:
+                                                print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")
+                                                sleep(2)
+                                                 
+                                 else:
+                                     print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
+                                     sleep(2)
                              except:
                                  print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
                                  sleep(2)
-                     else:
+                    else:
                          print("\033[31mCommande non valide. Veuillez Recommencer3\033[0m")
-                         sleep(2)            
-                                
-                
-                    
-                    
-                    
-                    
+                         sleep(2)
+            ech.changementDeCouleur()
+            print('Les '+str(ech.tourJoueur)+'s ont gagné')
+
+
+# =============================================================================
+# #branche de l'ia non modifier                        
+# =============================================================================
         elif choix == "ia" :
             # Au début de la partie, aucun roi n'est en échec donc echec = False
             tours=0
