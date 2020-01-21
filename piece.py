@@ -79,9 +79,9 @@ class Piece:
                 if self.tab120[pos_120-ligne]!=-1:
                     if self.echiquier.estVide(self.tab120[pos_120-ligne]):
                         position_possible += [self.tab120[pos_120-ligne]]
-                if self.tab120[pos_120-ligne*2]!=-1:
-                    if self.echiquier.estVide(self.tab120[pos_120-ligne*2]):
-                        position_possible += [self.tab120[pos_120-ligne*2]]
+                        if self.tab120[pos_120-ligne*2]!=-1:
+                            if self.echiquier.estVide(self.tab120[pos_120-ligne*2]):
+                                position_possible += [self.tab120[pos_120-ligne*2]]
 #                self.tour=2
             #Tours suivants
             else:
@@ -96,9 +96,9 @@ class Piece:
                 if self.tab120[pos_120+ligne]!=-1:
                     if self.echiquier.estVide(self.tab120[pos_120+ligne]):
                         position_possible += [self.tab120[pos_120+ligne]]
-                if self.tab120[pos_120+ligne*2]!=-1:
-                    if self.echiquier.estVide(self.tab120[pos_120+ligne*2]):
-                        position_possible += [self.tab120[pos_120+ligne*2]]
+                        if self.tab120[pos_120+ligne*2]!=-1:
+                            if self.echiquier.estVide(self.tab120[pos_120+ligne*2]):
+                                position_possible += [self.tab120[pos_120+ligne*2]]
 #                self.tour=2
             #Tours suivants
             else:
@@ -170,9 +170,7 @@ class Piece:
         for k in [-1,0,1]: #Indice vertical
             for i in [-1,0,1]: #Indice horizontal
                 if self.tab120[pos_120-k*ligne-i]!=-1:
-                    #si les cases autour de lui sont vides
-                    if self.echiquier.estVide(self.tab120[pos_120-k*ligne-i]):
-                        position_possibles+=[self.tab120[pos_120-k*ligne-i]]
+                    position_possibles+=[self.tab120[pos_120-k*ligne-i]]
         return position_possibles
             
     def mvmt_cavalier(self,position):
@@ -192,15 +190,11 @@ class Piece:
         for k in [-2,2]: #Indice vertical
             for i in [-1,1]: #Indice horizontal
                 if self.tab120[pos_120+k*ligne+i]!=-1:
-                    # Si les cases sont vides
-                    if self.echiquier.estVide(self.tab120[pos_120+k*ligne+i]):
-                        position_possibles+=[self.tab120[pos_120+k*ligne+i]]
+                    position_possibles+=[self.tab120[pos_120+k*ligne+i]]
         for k in [-1,1]: #Indice vertical
             for i in [-2,2]: #Indice horizontal
-                # Si les cases sont vides
                 if self.tab120[pos_120+k*ligne+i]!=-1:
-                    if self.echiquier.estVide(self.tab120[pos_120+k*ligne+i]):
-                        position_possibles+=[self.tab120[pos_120+k*ligne+i]]
+                    position_possibles+=[self.tab120[pos_120+k*ligne+i]]
         return position_possibles
     
     def mvmt_tour(self,position):
@@ -221,6 +215,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120+i]):
                 position_possibles += [self.tab120[pos_120+i]]
             else:
+                position_possibles += [self.tab120[pos_120+i]]
                 break
             i=i+1
         i=1
@@ -228,6 +223,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120-i]):
                 position_possibles += [self.tab120[pos_120-i]]
             else:
+                position_possibles += [self.tab120[pos_120-i]]
                 break
             i=i+1
         #Ajout des cases a la verticale
@@ -237,6 +233,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120+i*ligne]):
                 position_possibles += [self.tab120[pos_120+i*ligne]]
             else:
+                position_possibles += [self.tab120[pos_120+i*ligne]]
                 break
             i=i+1
         i=1
@@ -245,6 +242,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120-i*ligne]):
                 position_possibles += [self.tab120[pos_120-i*ligne]]
             else:
+                position_possibles += [self.tab120[pos_120-i*ligne]]
                 break
             i=i+1
         return position_possibles
@@ -269,6 +267,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120-i*ligne+i]):
                 position_possibles+=[ self.tab120[pos_120-i*ligne+i]]
             else:
+                position_possibles+=[ self.tab120[pos_120-i*ligne+i]]
                 break
             i=i+1
         #Ajout des cases sur la diagonale de la position vers le coin en bas droit
@@ -278,6 +277,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120+i*ligne+i]):
                 position_possibles+=[self.tab120[pos_120+i*ligne+i]]
             else:
+                position_possibles+=[self.tab120[pos_120+i*ligne+i]]
                 break
             i=i+1
         #Ajout des cases sur la diagonale de la position vers le coin en haut gauche
@@ -287,6 +287,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120-i*ligne-i]):
                 position_possibles+=[self.tab120[pos_120-i*ligne-i]]
             else:
+                position_possibles+=[self.tab120[pos_120-i*ligne-i]]
                 break
             i=i+1
         #Ajout des cases sur la diagonale de la position vers le coin en bas gauche
@@ -296,6 +297,7 @@ class Piece:
             if self.echiquier.estVide(self.tab120[pos_120-i*ligne+i]):
                 position_possibles+=[self.tab120[pos_120-i*ligne+i]]
             else:
+                position_possibles+=[self.tab120[pos_120-i*ligne+i]]
                 break
             i=i+1
         return position_possibles
