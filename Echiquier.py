@@ -39,11 +39,11 @@ class Echiquier:
         Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece(),
         Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece('TOUR','noir'),
+        Piece('TOUR','blanc'),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece('TOUR','noir'),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece('ROI','blanc'),Piece(),Piece(),Piece(),
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
-        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece(),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
+        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece(),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece()
         ]
         
         for i in self.echiquier:
@@ -71,6 +71,8 @@ class Echiquier:
         return self.tourJoueur
     def chgtEchiquier(self,echiquier):
         self.echiquier=echiquier
+    def chtCouleur(self,couleur):
+        self.tourJoueur=couleur
     
     def nbre(self):
         '''renvoie le nombre de piéce restant sur l'échiquier'''
@@ -79,20 +81,18 @@ class Echiquier:
 # Fonction de conversion 
 # =============================================================================
     def conversionEnIndex(self,position): 
-        '''passer de coordonnees en index 
+        '''
+        passer de coordonnees en index 
         ex: a8 =>0
         '''
         return self.coordonnees.index(position)  
     
     def conversionEnCoord(self,index):
-        '''passer de index a coordonnes
+        '''
+        passer de index a coordonnes
         ex: 0 => a8
         '''
         return self.coordonnees[index]
-    
-#    def pieceDeIndex(self,piece):
-#        '''passer de la piece  a l'index'''
-#        return self.echiquier.index(piece)
     
     def changementDeCouleur(self):
         '''Fonction de changement de couleur'''
@@ -108,6 +108,7 @@ class Echiquier:
         return self.echiquier[iPos].getNom() ==''
     
     def rechercheRoi(self,nom,couleur):
+        '''renvoie l'indice du roi voulut'''
         for i  in range(len(self.echiquier)):
                 if self.echiquier[i].getCouleur()==couleur and self.echiquier[i].getNom()==nom:
                     return i
@@ -133,6 +134,7 @@ class Echiquier:
                 self.jeux[index]='R'+ self.echiquier[index].getCouleur()[0]
             elif self.echiquier[index].getNom()=='':
                 self.jeux[index]='--'
+        
     def __str__(self):
         ''' fonction d'affichage du jeux d'echec '''
         
@@ -170,7 +172,6 @@ class Echiquier:
         '''fonction qui permet de deplacer un pion si les regles sont valides'''
         iPosInitial=self.conversionEnIndex(posInitial)
         iPosNouvelle=self.conversionEnIndex(posNouvelle)
-
         if self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur():
             # Ajout au cimetiere si besion 
             if self.echiquier[iPosNouvelle].getNom()!='':
@@ -197,7 +198,7 @@ class Echiquier:
     def testeDeplacer(self,posInitial,posNouvelle):
         iPosInitial=self.conversionEnIndex(posInitial)
         iPosNouvelle=self.conversionEnIndex(posNouvelle)
-        return self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur()
+        return self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur() and self.echec()!=(True,self.tourJoueur)
             
 # =============================================================================
 # Fonctions de Verification des coups (moteur)
@@ -209,7 +210,7 @@ class Echiquier:
         if self.echiquier[iPosNouvelle].getCouleur()==self.echiquier[iPosInitial].getCouleur():
             return False
         # verfication du coup joue par rapport a tous les coups possibles de la piece
-       
+        print(piece.Lposition)
         return iPosNouvelle in piece.Lposition
     
 # =============================================================================
@@ -256,59 +257,21 @@ class Echiquier:
 # =============================================================================
 # Echec
 # =============================================================================
-#    def echec(self):
-#        '''recherche de mise en echec. Renvoie un booleen'''
-#        if self.tourJoueur=='noir':
-#            
-#            IRoiNoir=self.rechercheRoi('ROI','noir')
-#            
-#            ListeBlanc=self.coupsPossibleBlanc()
-#            
-#            
-#            if IRoiNoir in ListeBlanc:
-#                return True
-#        else:
-#            IRoiBlanc=self.rechercheRoi('ROI','blanc')
-#            ListeNoir=self.coupsPossibleNoir()
-#            if IRoiBlanc in ListeNoir:
-#               return True
-#        return False
     def echec(self):
         '''recherche de mise en echec. Renvoie un booleen et la couleur qui est en echec '''     
         IRoiNoir= self.rechercheRoi('ROI','noir')
         ListeBlanc= self.coupsPossibleBlanc()
+        print(IRoiNoir)
+        print(ListeBlanc)
         if IRoiNoir in ListeBlanc:
+            print('echec=truen')
             return (True,'noir')#si le roi est mangeable alors on est en echec
         IRoiBlanc= self.rechercheRoi('ROI','blanc')
         ListeNoir= self.coupsPossibleNoir()
         if IRoiBlanc in ListeNoir:
-           return (True,'blanc')
+            print('echec=trueb')
+            return (True,'blanc')
         return (False,None)
-                    
-    def deplacementEchec(self,posInitial,posNouvelle):
-        '''fonction qui permet de deplacer un pion si les regles sont valides dans le cas de l'echec'''
-        iPosInitial=self.conversionEnIndex(posInitial)
-        iPosNouvelle=self.conversionEnIndex(posNouvelle)
-
-        if self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur():
-            # Ajout au cimetiere si besion 
-            if self.echiquier[iPosNouvelle].getNom()!='':
-                if self.echiquier[iPosNouvelle].getNom()[1]=='b':
-                    self.cimetiereBlanc.append(self.echiquier[iPosNouvelle])
-                else:
-                    self.cimetiereNoir.append(self.echiquier[iPosNouvelle])
-            self.echiquier[iPosNouvelle]=self.echiquier[iPosInitial]
-            self.echiquier[iPosInitial]=Piece()
-            self.historique.append([posInitial,posNouvelle]) 
-        
-            if self.echiquier[iPosNouvelle].getNom()=='PION':
-                self.echiquier[iPosNouvelle].changementDeTour()
-                # verifiaction si il y a promotion
-                if iPosNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:
-                    self.promotion()
-            # defini les mouvements possible pour chaque pion
-            self.mvtPossible()
-      
        
 # =============================================================================
 #  Echec Et Mat       
@@ -484,7 +447,7 @@ class Echiquier:
             return 0
         
 # =============================================================================
-# mise a jour des deplacement possible
+# Mise a jour des deplacement possible
 # =============================================================================
         
     def mvtPossible(self):
@@ -523,8 +486,3 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-    
-        
-        
-        
-       
