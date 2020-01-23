@@ -134,6 +134,9 @@ if __name__ == '__main__':
                             # appelle des fonction de deplacement
                             if ech.testeDeplacer(mouvement[:2], mouvement[2:]) and PropreEchec!=(True,ech.tourJoueur):
                                 ech.deplacer(mouvement[:2], mouvement[2:])
+                                if ech.conversionEnIndex(mouvement[2:]) in ([i for i in range(8)] or ech.conversionEnIndex(mouvement[2:]) in [i for i in range(56,64)]) and ech.echiquier[ech.conversionEnIndex(mouvement[2:])].getNom()=='PION':
+                                    ech.promotion(ech.conversionEnIndex(mouvement[2:]))
+                                    ech.mvtPossible()
                                 BoolEchec = ech.echec()[0]
                                 if BoolEchec == True:  # verification de l'echec apres le deplacement
                                     ech.__str__()  # Fonction d'affichage
