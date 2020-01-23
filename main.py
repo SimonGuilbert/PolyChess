@@ -68,7 +68,7 @@ def fonctionEchec(BoolEchDeplacement,EchecEtMat):
             erreur()
     return BoolEchDeplacement,EchecEtMat
 # =============================================================================
-# Programme principale du jeux d'echec
+# Programme principal du jeux d'echec
 # =============================================================================
 print('=============================================================================')
 print("                            Jeux d'echecs")
@@ -79,7 +79,7 @@ if  __name__=='__main__':
         print('=============================================================================')
         print("                                 Menu")
         print('=============================================================================')
-        print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur. Pour quitter, entrer \033[31mexit\033[0m.")  
+        print("\nEntrer \033[31m1v1\033[0m pour jouer contre un humain et \033[31mia\033[0m pour jouer contre l'ordinateur.\nPour quitter, entrer \033[31mexit\033[0m.")  
         choix = input("Choix du mode de jeu : ")
         ech=Echiquier()#créaction de l'échiquier en état initial
 # =============================================================================
@@ -102,9 +102,9 @@ if  __name__=='__main__':
                     ech.changementDeCouleur()
                     print('les'+str(ech.tourJoueur)+'ont gagnée')
                     
-                print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
+                print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par \nexemple \033[31ma7a6\033[0m "+
                       "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
-                      "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
+                      "de la position de la tour que \nl'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
                 if echec == False:
                     mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (\033[31mexit\033[0m permet de quitter) : ')
                     if mouvement  == 'historique':
@@ -114,7 +114,8 @@ if  __name__=='__main__':
                              ech.roque(mouvement[-2:])
                              ech.changementDeCouleur()
                          except:
-                             erreur()
+                             print("\033[31mCommande non valide. Si vous voulez roquer, utilisez la forme roqueh1\033[0m")  
+                             sleep(2)
                     elif len(mouvement)==4:
                          if mouvement=='exit': 
                              EchecEtMat=True
@@ -129,11 +130,14 @@ if  __name__=='__main__':
                                          BoolEchDeplacement=False
                                          [BoolEchDeplacement,EchecEtMat]=fonctionEchec(BoolEchDeplacement,EchecEtMat)        
                                  else:
-                                     erreurCoup()
+                                     print("\033[31mCommande non valide : la pièce "+mouvement[:2]+" n'a pas le droit de se déplacer en "+mouvement[2:]+" \033[0m")  
+                                     sleep(2)
                              except:
-                                 erreurCoup()
+                                 print("\033[31mCommande non valide. Vérifiez que votre saisie est de la forme e7a6 puis réessayez\033[0m")  
+                                 sleep(2)
                     else:
-                         erreur()
+                         print("\033[31mCommande non valide. Vérifiez que votre saisie est de la forme e7a6 puis réessayez\033[0m")  
+                         sleep(2)
             #fin de jeux: Annonce du gagnant
             ech.changementDeCouleur()
             print('Les '+str(ech.tourJoueur)+'s ont gagné')
@@ -150,9 +154,9 @@ if  __name__=='__main__':
             while True:  
                 ech.__str__()
                 if ech.get_TourJoueur()=='blanc':
-                    print("\nVous jouez avec les blancs.\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
+                    print("\nVous jouez avec les blancs.\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par \nexemple \033[31ma7a6\033[0m "+
                           "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
-                          "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
+                          "de la position de la tour que \nl'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
                     if echec == False :
                         mouvement=input('A vous de jouer (exit permet de quitter) : ')        
                     if mouvement  == 'historique':
@@ -220,5 +224,6 @@ if  __name__=='__main__':
         elif choix =='exit':
               Menu=False       
         else:  
-            erreur()
+            print("\033[31mCommande non valide. Vous devez écrire 1v1, ia ou exit\033[0m")  
+            sleep(2)
              
