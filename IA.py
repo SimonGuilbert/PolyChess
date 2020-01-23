@@ -108,77 +108,41 @@ class IA :
                         #Ajout des coups deja joues
                         for h in hist:
                             board.deplacer(h[0],h[1])  
+
                         #Verification de la possiblite du coup puis deplacemnt de la piece avec
                         #Conversion des index du mouvement en coordonnes
                         if board.testeDeplacer(board.conversionEnCoord(index),board.conversionEnCoord(move)):
                             board.deplacer(board.conversionEnCoord(index),board.conversionEnCoord(move)) 
-                        #Comparaison de evaluation de l'echiquier actuel avec l'ancien
-                        if self.evaluation(board)[0]<evalua[0]:
-                            #Si l'evaluation est meilleur, on garde ce mouvement
-                            meilleur_coup=[[piece,index,move]]
-                            evalua=self.evaluation(board)
-                        #Si aucun des coups est meilleur et ne fait pas changer l'evaluation 
-                        elif self.evaluation(board)[0]==evalua[0]:
-                            #alors on les ajoutent a meme_coup
-                            meme_coup+=[[piece,index,move]]
+                            #Difference entre les cas en echec ou non
+                            if ech.echec()[0]==True:
+                                #Comparaison de evaluation de l'echiquier actuel avec l'ancien
+                                if self.evaluation(board)[0]<evalua[0] and board.echec()[0]==False:
+                                    #Si l'evaluation est meilleur, on garde ce mouvement et faire sortir de l'echec
+                                    meilleur_coup=[[piece,index,move]]
+                                    evalua=self.evaluation(board)      
+                                #Si aucun des coups est meilleur et ne fait pas changer l'evaluation et faire sortir de l'echec 
+                                if self.evaluation(board)[0]==evalua[0] and board.echec()[0]==False:
+                                    #alors on les ajoutent a meme_coup
+                                    meme_coup+=[[piece,index,move]]
+                            else:
+                                if self.evaluation(board)[0]<evalua[0]:
+                                    #Si l'evaluation est meilleur, on garde ce mouvement
+                                    meilleur_coup=[[piece,index,move]]
+                                    evalua=self.evaluation(board)
+                                #Si aucun des coups est meilleur et ne fait pas changer l'evaluation 
+                                if self.evaluation(board)[0]==evalua[0]:
+                                    #alors on les ajoutent a meme_coup
+                                    meme_coup+=[[piece,index,move]]
             index+=1
         #Si l'existe, deplacement selon le meilleurcoup     
-        print('m',meilleur_coup,len(meilleur_coup))
-        #print('M',meme_coup)
         if len(meilleur_coup)==1:
-            print('ab')
             #Retour le coup sur forme de coordonnes
             return(str(ech.conversionEnCoord(meilleur_coup[0][1]))+str(ech.conversionEnCoord(meilleur_coup[0][2])))
         #Sinon tirage au sort dans meme_coup
         else:
             k=randint(0,(len(meme_coup)-1)) 
             return(str(ech.conversionEnCoord(meme_coup[k][1]))+str(ech.conversionEnCoord(meme_coup[k][2])))
-            
-        
- 
 
-# =============================================================================
-# TEST           
-# =============================================================================
-#board = chess.Board()
-#move=chess.Move.from_uci("c2c4")
-#board.push(move)
-#move=chess.Move.from_uci("g8f6")
-#board.push(move)
-#move=chess.Move.from_uci("d2d4")
-#board.push(move)
-#move=chess.Move.from_uci("e7e6")
-#board.push(move)
-#move=chess.Move.from_uci("g1f3")
-#board.push(move)
-#move=chess.Move.from_uci("d7d5")
-#board.push(move)
-#print(board)
-#
-#with chess.polyglot.open_reader("data/polyglot/performance.bin") as reader:   
-#    Move=[]
-#    Weight=[]
-#    Learn=[]
-#    maxi=0
-#    i=0
-#    ind_max=0
-#    for entry in reader.find_all(board):
-#        #print(entry.move,entry.weight,entry.learn)
-#        Move+=[entry.move]
-#        Weight+=[entry.weight]
-#        Learn+=[entry.learn]
-#    if Move==[]:
-#        print(None)
-#    elif len(Move)==len(Weight):
-#        for w in Weight:
-#            if w>maxi:
-#                maxi=w
-#                ind_max=i
-#            elif w==maxi:
-#                if Learn[ind_max]<Learn[i]:
-#                    maxi=w
-#                    ind_max=i
-#            i+=1    
-#    print(Move[ind_max])
-    
+            
+
             
