@@ -157,12 +157,13 @@ if __name__ == '__main__':
         # =============================================================================
         # Mode joueur contre IA
         # =============================================================================
-        elif choix == "ia":
-            # Au début de la partie, aucun roi n'est en échec donc echec = False
-            tours = 0
+         elif choix == "ia":
+            I=0
+            # Au début de la partie, aucun roi n'est en échec donc echecEtMAt= False et echec =False
+            EchecEtMat = False
             echec = False
             ia = IA()
-            while True:
+            while EchecEtMat==False:
                 ech.__str__()
                 if ech.get_TourJoueur() == 'blanc':
                     print(
@@ -170,70 +171,70 @@ if __name__ == '__main__':
                         "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi " +
                         "de la position de la tour que \nl'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
                     if echec == False:
-                        mouvement = input('A vous de jouer (exit permet de quitter) : ')
+                       mouvement = input('A vous de jouer (exit permet de quitter) : ')
                     if mouvement == 'historique':
                         ech.affichageHistorique()
                     elif len(mouvement) == 7:
                         try:
                             ech.roque(mouvement[-2:])
+                            ech.changementDeCouleur()
                         except:
-                            print("\033[31mCommande non valide. Veuillez Recommencer11\033[0m")
+                            print("\033[31mCommande non valide. Si vous voulez roquer, utilisez la forme roqueh1\033[0m")
                             sleep(2)
-
                     elif len(mouvement) == 4:
                         if mouvement == 'exit':
-                            break
+                            EchecEtMat = True
                         else:
-                            try:
-                                # Test si le mouvement sont possibles
-                                if ech.testeDeplacer(mouvement[:2], mouvement[2:]):
-                                    ech.deplacer(mouvement[:2], mouvement[2:])
-                                    tours += 1
-                                    BoolEchec = ech.echec()
-                                    # Verifie si il y a echec
-                                    if BoolEchec == True:
-                                        mouvement = input(
-                                            'Vous êtes en échec. A vous de jouer (exit permet de quitter) : ')
-                                        ech.deplacer(mouvement[:2], mouvement[2:])
-                                else:
-                                    print("\n\033[31mLe coup n'est pas possible. Réessayez\033[0m")
-                                    sleep(2)
-                            except:
-                                print("\033[31mCommande non valide. Veuillez Recommencer21\033[0m")
+                            echiquierTeste = Echiquier()
+                            for h in ech.get_historique():
+                                echiquierTeste.deplacer(h[0],h[1])
+                            echiquierTeste.deplacer(mouvement[:2], mouvement[2:])
+                            PropreEchec=echiquierTeste.echec()
+                            # appelle des fonction de deplacement
+                            if ech.testeDeplacer(mouvement[:2], mouvement[2:]) and PropreEchec!=(True,ech.tourJoueur):
+                                ech.deplacer(mouvement[:2], mouvement[2:])
+                                BoolEchec = ech.echec()[0]
+                                if BoolEchec == True and ech.tourJoueur!='noir':  # verification de l'echec apres le deplacement
+                                    ech.__str__()  # Fonction d'affichage
+                                    BoolEchDeplacement = False
+                                    [BoolEchDeplacement, EchecEtMat] = fonctionEchec(BoolEchDeplacement, EchecEtMat,ech)
+                            else:
+                                print("\033[31mCommande non valide : La pièce " + mouvement[:2] + " n'a pas le droit de se déplacer en " + mouvement[2:] + " \033[0m")
                                 sleep(2)
+
                     else:
-                        print("\033[31mCommande non valide. Veuillez Recommencer31\033[0m")
+                        print(
+                            "\033[31mCommande non valide. Vérifiez que votre saisie est de la forme e7a6 puis réessayez\033[0m")
                         sleep(2)
+     
                 else:
                     hist = ech.get_historique()
-                    # print("\nA l'IA de jouer")
+
                     # Bibliotheque d'ouverture
                     if ia.ouverture(hist) != None:
                         try:
                             mouvement = str(ia.ouverture(hist))
                             print("\nL'IA joue le mouvement :", mouvement)
                             ech.deplacer(mouvement[:2], mouvement[2:])
-                            tours += 1
+                            sleep(0.5)
                         except:
                             print("\033[31mCommande non valide. Veuillez Recommencer41\033[0m")
                             sleep(2)
-                    # Fin de la partie
-                    # Verifie si il y a echec
-                    elif ech.echec() == True:
-                        print("L'IA est en echec")
-                        break
-                        # Suite du jeu
-                    else:
+                    # Suite du jeu
+                    elif ech.echec()[0] == True and ech.VerificationEchecEtMat()==False:
                         try:
                             mouvement = ia.middlegame(hist, ech)
                             print("\nL'IA joue le mouvement :", mouvement)
                             ech.deplacer(mouvement[:2], mouvement[2:])
-                            tours += 1
+                            sleep(0.5)
                         except:
                             print("\033[31mCommande non valide. Veuillez Recommencer51\033[0m")
-                            break
                             sleep(2)
+                    EchecEtMat=ech.VerificationEchecEtMat()
 
+            ech.changementDeCouleur()
+            print('Les ' + str(ech.tourJoueur) + 's ont gagné')
+            
         elif choix == 'exit':
             Menu = False
         else:
