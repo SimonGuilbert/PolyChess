@@ -9,10 +9,12 @@ from Echiquier import Echiquier
 from time import sleep
 from IA import IA
 
-#Fonction: 
+# =============================================================================
+# Fonction: 
+# =============================================================================
 def erreur():
     '''fonction pour l'affichage d'erreur pour les commandes'''
-    print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")
+    print("\033[31mCommande non valide. Veuillez Recommencer1\033[0m")  
     sleep(2)
     
 def erreurCoup():
@@ -103,7 +105,7 @@ if  __name__=='__main__':
                 print("\nEntrer la case de départ du pion à déplacer puis la case d'arrivée. Par exemple \033[31ma7a6\033[0m "+
                       "permet de déplacer le pion de a7 en a6. \n\nPour roquer, il faut écrire le mot roque suivi "+
                       "de la position de la tour que l'on souhaite 'roquer'. Par exemple \033[31mroqueh1\033[0m")
-                if echec == False :
+                if echec == False:
                     mouvement=input('Aux '+str(ech.tourJoueur)+'s de jouer (\033[31mexit\033[0m permet de quitter) : ')
                     if mouvement  == 'historique':
                         ech.affichageHistorique()
@@ -122,12 +124,10 @@ if  __name__=='__main__':
                                  if ech.testeDeplacer(mouvement[:2],mouvement[2:]):
                                      ech.deplacer(mouvement[:2],mouvement[2:]) 
                                      BoolEchec=ech.echec()[0]
-                                     print('deplacement fait')
-                                     if BoolEchec==True:#verification de l'echec apres le deplacement 
+                                     if BoolEchec==True:#verification de l'echec apres le deplacement
                                          ech.__str__()#Fonction d'affichage
                                          BoolEchDeplacement=False
-                                         [BoolEchDeplacement,EchecEtMat]=fonctionEchec(BoolEchDeplacement,EchecEtMat)
-                                                 
+                                         [BoolEchDeplacement,EchecEtMat]=fonctionEchec(BoolEchDeplacement,EchecEtMat)        
                                  else:
                                      erreurCoup()
                              except:

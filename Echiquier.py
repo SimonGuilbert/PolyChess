@@ -36,14 +36,14 @@ class Echiquier:
         
         # Position initiale des pièces sur l'echiquier
         self.echiquier = [
-        Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece('TOUR','noir'),
+        Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece(),
         Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
+        Piece('TOUR','blanc'),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece('TOUR','noir'),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
+        Piece(),Piece(),Piece(),Piece(),Piece('ROI','blanc'),Piece(),Piece(),Piece(),
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
-        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
+        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece(),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece()
         ]
         
         for i in self.echiquier:
@@ -187,7 +187,7 @@ class Echiquier:
                 self.echiquier[iPosNouvelle].changementDeTour()
                 # verifiaction si il y a promotion
                 if iPosNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:
-                    self.promotion()
+                    self.promotion(iPosNouvelle)
                  
             
             self.changementDeCouleur()
@@ -198,7 +198,8 @@ class Echiquier:
     def testeDeplacer(self,posInitial,posNouvelle):
         iPosInitial=self.conversionEnIndex(posInitial)
         iPosNouvelle=self.conversionEnIndex(posNouvelle)
-        return self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur() and self.echec()!=(True,self.tourJoueur)
+      
+        return self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur()
             
 # =============================================================================
 # Fonctions de Verification des coups (moteur)
@@ -221,7 +222,8 @@ class Echiquier:
         promo= input('Promotion! Veuillez choisir une piece(fou, dame, cavalier,tour):')
         promoUpp=promo.upper()
         if promoUpp in ['FOU','DAME','CAVALIER','TOUR']:
-            self.echiquier[position]=Piece(promoUpp, self.tourJoueur)    
+            self.echiquier[position]=Piece(promoUpp, self.tourJoueur)   
+            self.echiquier[position].impEchiquier(self)
         
     def roque(self,positionTour):
         '''fonction permetant de roquer en testant les quatres positions possibles'''
