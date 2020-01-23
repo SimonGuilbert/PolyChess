@@ -128,7 +128,7 @@ class Piece:
                     if echi[self.tab120[pos_120+ligne-1]].getCouleur()!=self.couleur and echi[self.tab120[pos_120+ligne-1]].getNom()!= 'ROI' :
                         position_possibles+=[self.tab120[pos_120+ligne-1]]
             #Si la case en bas a droite est différente de -1
-            elif self.tab120[pos_120+ligne+1]!=-1:
+            if self.tab120[pos_120+ligne+1]!=-1:
                 #Si la case en bas a droite contient une piece
                 if not self.echiquier.estVide(self.tab120[pos_120+ligne+1]):
                     #Si la piece est de couleur differente et si ce n'est pas un roi
