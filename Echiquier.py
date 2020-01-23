@@ -45,9 +45,6 @@ class Echiquier:
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
         Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
         ]
-
-
-        
         for i in self.echiquier:
             i.impEchiquier(self)
         # Matrice d'affichage
@@ -270,8 +267,21 @@ class Echiquier:
 #  Echec Et Mat       
 # =============================================================================
             
-#    def VerificationEchecEtMat(self):
-#        '''verification des Echec et Mat renvoie un booleen'''
+    def VerificationEchecEtMat(self):
+        '''verification des Echec et Mat renvoie un booleen'''
+        for i in range(len(self.echiquier)):
+            for coup in self.echiquier[i].Lposition:
+                
+                board=Echiquier()
+                for h in self.get_historique():
+                    board.deplacer(h[0],h[1]) 
+                board.deplacer(self.conversionEnCoord(i),self.conversionEnCoord(coup))
+                if board.echec()!=(True,self.tourJoueur):
+                    return False
+                    
+        return True
+            
+        
 #        ListeBlanc=self.coupsPossibleBlanc()
 #        ListeNoir=self.coupsPossibleNoir()
 #        if self.tourJoueur=='noir':#noir ou Blanc ???

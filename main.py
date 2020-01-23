@@ -26,8 +26,8 @@ def erreurCoup():
 def fonctionEchec(BoolEchDeplacement, EchecEtMat,ech):
     '''fonction qui gere le cas d'une echec'''
     
-#    if ech.VerificationEchecEtMat():
-#        return True, True
+    if ech.VerificationEchecEtMat():
+        return True, True
     while BoolEchDeplacement == False:
         echiquierTeste = Echiquier()
         for h in ech.get_historique():
