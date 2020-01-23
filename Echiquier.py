@@ -36,15 +36,16 @@ class Echiquier:
         
         # Position initiale des pièces sur l'echiquier
         self.echiquier = [
-        Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece(),
+        Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece('TOUR','noir'),
         Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece('TOUR','noir'),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece('ROI','blanc'),Piece(),Piece(),
+        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
+        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
-        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece(),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
+        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
         ]
+
 
         
         for i in self.echiquier:
