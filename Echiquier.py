@@ -178,10 +178,6 @@ class Echiquier:
         
             if self.echiquier[iPosNouvelle].getNom()=='PION':
                 self.echiquier[iPosNouvelle].changementDeTour()
-                # verifiaction si il y a promotion
-                if iPosNouvelle in [i for i in range(8)] or posNouvelle in [i for i in range(56,64)]:
-                    self.promotion(iPosNouvelle)
-                 
             
             self.changementDeCouleur()
             # defini les mouvements possible pour chaque pion
@@ -211,11 +207,13 @@ class Echiquier:
 # =============================================================================
     def promotion(self,position):
         '''Fonction permetant la promotion d'un pion en demandant la piece voulue'''
+        self.changementDeCouleur()
         promo= input('Promotion! Veuillez choisir une piece(fou, dame, cavalier,tour):')
         promoUpp=promo.upper()
         if promoUpp in ['FOU','DAME','CAVALIER','TOUR']:
             self.echiquier[position]=Piece(promoUpp, self.tourJoueur)   
             self.echiquier[position].impEchiquier(self)
+        self.changementDeCouleur()
         
     def roque(self,positionTour):
         '''fonction permetant de roquer en testant les quatres positions possibles'''
