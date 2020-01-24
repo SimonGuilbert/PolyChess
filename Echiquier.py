@@ -140,7 +140,7 @@ class Echiquier:
         ''' fonction d'affichage du jeux d'echec '''
         affichage=''
         self.matriceJeux() 
-        affichage+='\n'+'cimetière Blanc'+'\n'
+        affichage+='\n'+'cimetière Blanc : '+'\n'
         affichage+=self.affichageCimetiere(self.cimetiereBlanc)+'\n'
         affichage+='   a  b  c  d  e  f  g  h'+'\n'
         affichage+='  -----------------------'+'\n'
@@ -156,7 +156,7 @@ class Echiquier:
                 compteur-=1
         affichage+='  -----------------------'+'\n'
         affichage+='   a  b  c  d  e  f  g  h'+'\n'
-        affichage+='cimetière Noir'+'\n'
+        affichage+='cimetière Noir : '+'\n'
         affichage+=self.affichageCimetiere(self.cimetiereNoir)+'\n'
         print(affichage)
         
@@ -476,5 +476,3 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-
-
