@@ -14,7 +14,9 @@ import chess.syzygy
 # Classe de l'echiquier avec les regles associees 
 # =============================================================================
 class Echiquier:
-    '''classe qui represente l'echiquier de norme 8 x 8 avec son moteur pour les coups '''
+    '''classe qui represente l'echiquier de norme 8 x 8 avec son moteur pour les coups 
+       Attention : necesitte le module chess (commande: pip install python-chess)
+    '''
     # Constructeur
     def __init__(self):
         
@@ -294,26 +296,25 @@ class Echiquier:
             
     def VerificationEchecEtMat(self):
         '''verification des Echec et Mat renvoie un booleen
-            Pour chaque coup possible, on teste le cas de l'echec sur un echiquier 
-        
+            Pour chaque coup possible, on teste le cas de l'echec sur un echiquier
+            Et si tout les coups donnent un echec alors on est en echec et mat 
         '''
-        for i in range(len(self.echiquier)):
-            for coup in self.echiquier[i].Lposition:
-            
-                board=Echiquier()
-                for h in self.get_historique():
+        
+        for i in range(len(self.echiquier)):# parourt tout l'echiquier
+            for coup in self.echiquier[i].Lposition:# Et Pour chaque possible
+                board=Echiquier()#Echiquier fictif
+                for h in self.get_historique():#recreation de jeux actuelle
                     board.deplacer(h[0],h[1]) 
-                board.deplacer(self.conversionEnCoord(i),self.conversionEnCoord(coup))
-                if board.echec()!=(True,self.tourJoueur):
-                    return False
-                    
-        return True
+                board.deplacer(self.conversionEnCoord(i),self.conversionEnCoord(coup))#deplace le coup
+                if board.echec()!=(True,self.tourJoueur):# teste de l'echec 
+                    return False# Il y a au moins un coup possible à jouer
+        return True# Aucun coup n'est possible pour sortir de l'echec
     
     def changementDeEchiquier(self):
         '''Permet de changement de forme d'echiquer entre ce qu'on a fait et la bibliothéque chess pour utiliser syzygy  '''
         strEchiquierFinal=''
         compteurSlash=0#pour savoir quand ajouter les slashs
-        compteurVide=0
+        compteurVide=0#Compte les emplacements vide par ligne
         
         for i in range(len(self.echiquier)):
             strEchiquier=''
