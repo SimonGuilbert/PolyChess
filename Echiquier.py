@@ -4,8 +4,6 @@ Created on Tue Dec  3 10:43:15 2019
 
 @author: Jonathan Molieres
 """
-
-from time import sleep #permet d'attendre la lecture au joueur en cas d'une erreur de coups 
 from piece import Piece
 import chess 
 import chess.syzygy
@@ -17,7 +15,7 @@ import chess.syzygy
 # =============================================================================
 class Echiquier:
     '''classe qui represente l'echiquier de norme 8 x 8 avec son moteur pour les coups '''
-    # Constructor
+    # Constructeur
     def __init__(self):
         
         
@@ -55,7 +53,7 @@ class Echiquier:
         self.historique=[]
         self.cimetiereBlanc=[]
         self.cimetiereNoir=[]
-        #defini les mouvements possible pour chaque pion
+        # Defini les mouvements possible pour chaque pion
         self.mvtPossible()
 # =============================================================================
 # getter
@@ -71,7 +69,7 @@ class Echiquier:
         return self.tourJoueur
     
     def nbre(self):
-        '''renvoie le nombre de pièce restant sur l'échiquier'''
+        '''renvoie le nombre de piéce restant sur l'échiquier'''
         return 32 -(len(self.cimetiereBlanc)+len(self.cimetiereNoir))
 # =============================================================================
 # Fonction de conversion 
@@ -141,7 +139,7 @@ class Echiquier:
         affichage=''
         self.matriceJeux() 
         affichage+='\n'+'cimetière Blanc'+'\n'
-        affichage+=self.affichageCimetiere(self.cimetiereNoir)+'\n'
+        affichage+=self.affichageCimetiere(self.cimetiereBlanc)+'\n'
         affichage+='   a  b  c  d  e  f  g  h'+'\n'
         affichage+='  -----------------------'+'\n'
         compteur=8
@@ -157,7 +155,7 @@ class Echiquier:
         affichage+='  -----------------------'+'\n'
         affichage+='   a  b  c  d  e  f  g  h'+'\n'
         affichage+='cimetière Noir'+'\n'
-        affichage+=self.affichageCimetiere(self.cimetiereBlanc)+'\n'
+        affichage+=self.affichageCimetiere(self.cimetiereNoir)+'\n'
         print(affichage)
         
     def affichageHistorique(self):
@@ -178,7 +176,7 @@ class Echiquier:
         if self.regleSimple(iPosInitial,iPosNouvelle) and self.tourJoueur==self.echiquier[iPosInitial].getCouleur():
             # Ajout au cimetiere si besion 
             if self.echiquier[iPosNouvelle].getNom()!='':
-                if self.echiquier[iPosNouvelle].getNom()[1]=='b':
+                if self.echiquier[iPosNouvelle].getCouleur()=='blanc':
                     self.cimetiereBlanc.append(self.echiquier[iPosNouvelle])
                 else:
                     self.cimetiereNoir.append(self.echiquier[iPosNouvelle])
@@ -428,7 +426,7 @@ class Echiquier:
                
     def echecEtMat(self):
         '''Avec la table de fin de jeux'''
-        if self.nbre() < 4 and self.nbre >= 0 :#sysygy commence seulement si il y a pas de plus de 3 pieces sur le terrain
+        if self.nbre() in [i for i in range(4)]:#sysygy commence seulement si il y a pas de plus de 3 pieces sur le terrain
             strEchiquier=self.changementDeEchiquier()#conversion de l'echiquier
             #utilisation de la librairie
             tablebase = chess.syzygy.open_tablebase("regular")
@@ -477,3 +475,5 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
+
+

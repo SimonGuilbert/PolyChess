@@ -99,6 +99,7 @@ class IA :
                     position_possibles+=piece.mvmt_dame(index)
                 elif piece.getNom() == 'ROI':
                     position_possibles+=piece.mvmt_roi(index)
+            
                 #Si la piece peut bouger
                 if position_possibles != []:
                     #Pour chacun des mouvements possibles de la piece
@@ -134,7 +135,7 @@ class IA :
                                     #alors on les ajoutent a meme_coup
                                     meme_coup+=[[piece,index,move]]
             index+=1
-        #Si l'existe, deplacement selon le meilleurcoup     
+        #Si l'existe, deplacement selon le meilleurcoup    
         if len(meilleur_coup)==1:
             #Retour le coup sur forme de coordonnes
             return(str(ech.conversionEnCoord(meilleur_coup[0][1]))+str(ech.conversionEnCoord(meilleur_coup[0][2])))
