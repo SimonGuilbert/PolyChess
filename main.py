@@ -62,6 +62,7 @@ def fonctionEchec(BoolEchDeplacement, EchecEtMat,ech,iaBooleen=False):
                 else:
                     # Appelle de la fonction d'erreur
                     erreurCoup()
+                    ech.__str__()  # Fonction d'affichage
         elif len(mouvement) == 7: # Gestion du roque
             
             if ech.TesteRoque(mouvement[-2:])==(True,ech.tourJoueur):
