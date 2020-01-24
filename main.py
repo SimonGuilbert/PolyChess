@@ -121,7 +121,7 @@ if __name__ == '__main__':
                             # affichage du roque apres validation
                             ech.roque(mouvement[-2:])
                             ech.changementDeCouleur()
-                        exlse:
+                        else:
                             print("\033[31mCommande non valide. Si vous voulez roquer, utilisez la forme roqueh1\033[0m")
                             sleep(2)
                     elif len(mouvement) == 4:
