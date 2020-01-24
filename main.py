@@ -29,12 +29,12 @@ def erreurCoup():
 
 def fonctionEchec(BoolEchDeplacement, EchecEtMat,ech,iaBooleen=False):
     '''fonction qui gere le cas d'une echec et verification de l'echec et mat'''
+    print(ech.VerificationEchecEtMat())
     if ech.VerificationEchecEtMat():
         return True, True
     # Cas du mode de l'ia
     if iaBooleen==True and ech.tourJoueur=='noir':
         ech.changementDeCouleur()
-        print('echec')
         return True,False
     # Cas du mode 1v1
     while BoolEchDeplacement == False:# sortie de la boucle si le deplacement demande est valide
@@ -123,6 +123,10 @@ def jeuxJoueur(EchecEtMat,ech,iaBooleen=False):
                             BoolEchDeplacement = False
                             [BoolEchDeplacement, EchecEtMat] = fonctionEchec(BoolEchDeplacement, EchecEtMat,ech,iaBooleen)
                             ech.changementDeCouleur()
+                            if EchecEtMat==True:
+                                ech.changementDeCouleur()
+                                return True
+                                
                     else:
                         print("\033[31mCommande non valide : La pièce " + mouvement[:2] + " n'a pas le droit de se déplacer en " + mouvement[2:] + " \033[0m")
                         sleep(2)
@@ -135,7 +139,6 @@ def jeuxJoueur(EchecEtMat,ech,iaBooleen=False):
 # =============================================================================
 # Programme principal du jeux d'echec
 # =============================================================================
-
 if __name__ == '__main__':
     # Afichage du titre du jeux
     print('=============================================================================')
