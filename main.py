@@ -29,7 +29,6 @@ def erreurCoup():
 
 def fonctionEchec(BoolEchDeplacement, EchecEtMat,ech,iaBooleen=False):
     '''fonction qui gere le cas d'une echec et verification de l'echec et mat'''
-    print(ech.VerificationEchecEtMat())
     if ech.VerificationEchecEtMat():
         return True, True
     # Cas du mode de l'ia
