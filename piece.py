@@ -77,40 +77,40 @@ class Piece:
             #Tour initial
             if self.tour == 1:
                 if self.tab120[pos_120-ligne]!=-1:
-                    if self.echiquier.estVide(self.tab120[pos_120-ligne]) and self.echiquier.echiquier[self.tab120[pos_120-ligne]].getNom() != "ROI":
+                    if self.echiquier.estVide(self.tab120[pos_120-ligne]) :
                         position_possible += [self.tab120[pos_120-ligne]]
                         if self.tab120[pos_120-ligne*2]!=-1:
-                            if self.echiquier.estVide(self.tab120[pos_120-ligne*2]) and self.echiquier.echiquier[self.tab120[pos_120-ligne*2]].getNom() != "ROI":
+                            if self.echiquier.estVide(self.tab120[pos_120-ligne*2]) :
                                 position_possible += [self.tab120[pos_120-ligne*2]]
-#                self.tour=2
+
             #Tours suivants
             else:
                 if self.tab120[pos_120-ligne]!=-1:
                     #Si les cases devant lui sont vides
-                    if self.echiquier.estVide(self.tab120[pos_120-ligne]) and self.echiquier.echiquier[self.tab120[pos_120-ligne]].getNom() != "ROI":
+                    if self.echiquier.estVide(self.tab120[pos_120-ligne]) :
                         position_possible += [self.tab120[pos_120-ligne]]
         #Pion noir
         if self.couleur == 'noir':
             #Tour initial
             if self.tour == 1:
                 if self.tab120[pos_120+ligne]!=-1:
-                    if self.echiquier.estVide(self.tab120[pos_120+ligne]) and self.echiquier.echiquier[self.tab120[pos_120+ligne]].getNom() != "ROI":
+                    if self.echiquier.estVide(self.tab120[pos_120+ligne]) :
                         position_possible += [self.tab120[pos_120+ligne]]
                         if self.tab120[pos_120+ligne*2]!=-1:
-                            if self.echiquier.estVide(self.tab120[pos_120+ligne*2]) and self.echiquier.echiquier[self.tab120[pos_120+ligne*2]].getNom() != "ROI":
+                            if self.echiquier.estVide(self.tab120[pos_120+ligne*2]) :
                                 position_possible += [self.tab120[pos_120+ligne*2]]
 #                self.tour=2
             #Tours suivants
             else:
                 if self.tab120[pos_120+ligne]!=-1:
                     #Si les cases devant lui sont vides
-                    if self.echiquier.estVide(self.tab120[pos_120+ligne]) and self.echiquier.echiquier[self.tab120[pos_120+ligne]].getNom() != "ROI":
+                    if self.echiquier.estVide(self.tab120[pos_120+ligne]) :
                         position_possible += [self.tab120[pos_120+ligne]]
         return position_possible+self.manger_pion(pos_120)
     
     def manger_pion(self,pos_120):
         '''
-        Permet de savoi si un pion peut manger une autre piece excepte un roi
+        Permet de savoir si un pion peut manger une autre piece 
         '''
         #Recuperation de la longeur de la ligne
         ligne=10
@@ -124,15 +124,15 @@ class Piece:
             if self.tab120[pos_120+ligne-1]!=-1:
                 #Si la case en bas a gauche contient une piece
                 if not self.echiquier.estVide(self.tab120[pos_120+ligne-1]):
-                    #Si la piece est de couleur differente et si ce n'est pas un roi
-                    if echi[self.tab120[pos_120+ligne-1]].getCouleur()!=self.couleur and echi[self.tab120[pos_120+ligne-1]].getNom()!= 'ROI' :
+                    #Si la piece est de couleur differente 
+                    if echi[self.tab120[pos_120+ligne-1]].getCouleur()!=self.couleur :
                         position_possibles+=[self.tab120[pos_120+ligne-1]]
             #Si la case en bas a droite est différente de -1
             if self.tab120[pos_120+ligne+1]!=-1:
                 #Si la case en bas a droite contient une piece
                 if not self.echiquier.estVide(self.tab120[pos_120+ligne+1]):
-                    #Si la piece est de couleur differente et si ce n'est pas un roi
-                    if echi[self.tab120[pos_120+ligne+1]].getCouleur()!=self.couleur and echi[self.tab120[pos_120+ligne+1]].getNom()!= 'ROI' :
+                    #Si la piece est de couleur differente 
+                    if echi[self.tab120[pos_120+ligne+1]].getCouleur()!=self.couleur :
                         position_possibles+=[self.tab120[pos_120+ligne+1]]
         #Si le pion est blanc
         if self.couleur == 'blanc':
@@ -140,15 +140,15 @@ class Piece:
             if self.tab120[pos_120-ligne-1]!=-1:
                 #Si la case en haut a gauche contient une piece
                 if not self.echiquier.estVide(self.tab120[pos_120-ligne-1]):
-                    #Si la piece est de couleur differente et si ce n'est pas un roi
-                    if echi[self.tab120[pos_120-ligne-1]].getCouleur()!=self.couleur and echi[self.tab120[pos_120-ligne-1]].getNom()!= 'ROI' :
+                    #Si la piece est de couleur differente 
+                    if echi[self.tab120[pos_120-ligne-1]].getCouleur()!=self.couleur :
                         position_possibles+=[self.tab120[pos_120-ligne-1]]
             #Si la case en haut a droite est différente de -1
             if self.tab120[pos_120-ligne+1]!=-1:
                 #Si la case en haut a droite contient une piece
                 if not self.echiquier.estVide(self.tab120[pos_120-ligne+1]):
-                    #Si la piece est de couleur differente et si ce n'est pas un roi
-                    if echi[self.tab120[pos_120-ligne+1]].getCouleur()!=self.couleur and echi[self.tab120[pos_120-ligne+1]].getNom()!= 'ROI' :
+                    #Si la piece est de couleur differente 
+                    if echi[self.tab120[pos_120-ligne+1]].getCouleur()!=self.couleur :
                         position_possibles+=[self.tab120[pos_120-ligne+1]]
         return position_possibles 
         
@@ -212,7 +212,7 @@ class Piece:
         i=1
         #Ajout des cases a l'horizontale
         while self.tab120[pos_120+i]!=-1:
-            if self.echiquier.estVide(self.tab120[pos_120+i]) and self.echiquier.echiquier[self.tab120[pos_120+i]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120+i]) : 
                 position_possibles += [self.tab120[pos_120+i]]
             else:
                 position_possibles += [self.tab120[pos_120+i]]
@@ -220,7 +220,7 @@ class Piece:
             i=i+1
         i=1
         while self.tab120[pos_120-i]!=-1:
-            if self.echiquier.estVide(self.tab120[pos_120-i]) and self.echiquier.echiquier[self.tab120[pos_120-i]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120-i]) :
                 position_possibles += [self.tab120[pos_120-i]]
             else:
                 position_possibles += [self.tab120[pos_120-i]]
@@ -230,7 +230,7 @@ class Piece:
         i=1
         while self.tab120[pos_120+i*ligne]!=-1:
             # Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120+i*ligne]) and self.echiquier.echiquier[self.tab120[pos_120+i*ligne]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120+i*ligne]) :
                 position_possibles += [self.tab120[pos_120+i*ligne]]
             else:
                 position_possibles += [self.tab120[pos_120+i*ligne]]
@@ -239,7 +239,7 @@ class Piece:
         i=1
         while self.tab120[pos_120-i*ligne]!=-1:
             # Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120-i*ligne]) and self.echiquier.echiquier[self.tab120[pos_120-i*ligne]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120-i*ligne]) :
                 position_possibles += [self.tab120[pos_120-i*ligne]]
             else:
                 position_possibles += [self.tab120[pos_120-i*ligne]]
@@ -264,7 +264,7 @@ class Piece:
         #Ajout des cases sur la diagonale de la position vers le coin en haut droit
         while self.tab120[pos_120-i*ligne+i]!=-1:
             #Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120-i*ligne+i]) and self.echiquier.echiquier[self.tab120[pos_120-i*ligne+i]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120-i*ligne+i]) :
                 position_possibles+=[ self.tab120[pos_120-i*ligne+i]]
             else:
                 position_possibles+=[ self.tab120[pos_120-i*ligne+i]]
@@ -274,7 +274,7 @@ class Piece:
         i=1
         while self.tab120[pos_120+i*ligne+i]!=-1:
             #Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120+i*ligne+i]) and self.echiquier.echiquier[self.tab120[pos_120+i*ligne+i]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120+i*ligne+i]) :
                 position_possibles+=[self.tab120[pos_120+i*ligne+i]]
             else:
                 position_possibles+=[self.tab120[pos_120+i*ligne+i]]
@@ -284,7 +284,7 @@ class Piece:
         i=1
         while self.tab120[pos_120-i*ligne-i]!=-1:
             #Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120-i*ligne-i]) and self.echiquier.echiquier[self.tab120[pos_120-i*ligne-i]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120-i*ligne-i]) :
                 position_possibles+=[self.tab120[pos_120-i*ligne-i]]
             else:
                 position_possibles+=[self.tab120[pos_120-i*ligne-i]]
@@ -294,7 +294,7 @@ class Piece:
         i=1
         while self.tab120[pos_120+i*ligne-i]!=-1:
             #Si les cases sont vides
-            if self.echiquier.estVide(self.tab120[pos_120+i*ligne-i]) and self.echiquier.echiquier[self.tab120[pos_120+i*ligne-i]].getNom() != "ROI":
+            if self.echiquier.estVide(self.tab120[pos_120+i*ligne-i]) :
                 position_possibles+=[self.tab120[pos_120+i*ligne-i]]
             else:
                 position_possibles+=[self.tab120[pos_120+i*ligne-i]]
