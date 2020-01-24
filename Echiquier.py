@@ -35,14 +35,14 @@ class Echiquier:
         
         # Position initiale des pièces sur l'echiquier
         self.echiquier = [
-        Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece('TOUR','noir'),
+        Piece('TOUR','noir'),Piece(),Piece(),Piece(),Piece('ROI','noir'),Piece(),Piece(),Piece('TOUR','noir'),
         Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),
+        Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
+        Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece(),Piece(),Piece(),
         Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
-        Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
+        Piece('TOUR','blanc'),Piece(),Piece(),Piece(),Piece('ROI','blanc'),Piece(),Piece(),Piece('TOUR','blanc')
         ]
         for i in self.echiquier:
             i.impEchiquier(self)
@@ -231,36 +231,49 @@ class Echiquier:
     def roque(self,positionTour):
         '''fonction permetant de roquer en testant les quatres positions possibles'''
         iPositionTour=self.conversionEnIndex(positionTour)
-        if self.tourJoueur == 'blanc' and self.estVide(61) and self.estVide(62) and iPositionTour==63:
-            #modification de l'echiquier pour le roque
-            self.echiquier[62]=self.echiquier[60]
-            self.echiquier[61]=self.echiquier[63]
-            self.echiquier[63]=Piece()
-            self.echiquier[60]=Piece()
-        elif self.tourJoueur == 'blanc' and self.estVide(59) and self.estVide(58) and self.estVide(57) and iPositionTour==56:
-            #modification de l'echiquier pour le roque
-            self.echiquier[59]=self.echiquier[56]
-            self.echiquier[63]=self.echiquier[60]
-            self.echiquier[60]=Piece()
-            self.echiquier[56]=Piece()
+        if self.echiquier[60].getNom()=='ROI' and self.echiquier[60].getCouleur()=='blanc':
+            if self.tourJoueur == 'blanc' and self.estVide(61) and self.estVide(62) and iPositionTour==63:
+                # modification de l'echiquier pour le roque
+                self.echiquier[62]=self.echiquier[60]
+                self.echiquier[61]=self.echiquier[63]
+                self.echiquier[63]=Piece()
+                self.echiquier[60]=Piece()
+            elif self.tourJoueur == 'blanc' and self.estVide(59) and self.estVide(58) and self.estVide(57) and iPositionTour==56:
+                # modification de l'echiquier pour le roque
+                self.echiquier[59]=self.echiquier[56]
+                self.echiquier[58]=self.echiquier[60]
+                self.echiquier[57]=Piece()
+                self.echiquier[56]=Piece()
+                self.echiquier[60]=Piece()
+        if self.echiquier[4].getNom()=='ROI' and self.echiquier[4].getCouleur()=='noir':    
+            if self.tourJoueur == 'noir' and self.estVide(6) and self.estVide(5) and iPositionTour==7:
+                # modification de l'echiquier pour le roque
+                self.echiquier[5]=self.echiquier[7]
+                self.echiquier[6]=self.echiquier[4]
+                self.echiquier[7]=Piece()
+                self.echiquier[4]=Piece()
             
-        elif self.tourJoueur == 'noir' and self.estVide(6) and self.estVide(5) and iPositionTour==7:
-            #modification de l'echiquier pour le roque
-            self.echiquier[5]=self.echiquier[7]
-            self.echiquier[6]=self.echiquier[4]
-            self.echiquier[7]=Piece()
-            self.echiquier[4]=Piece()
-        
-        elif self.tourJoueur == 'noir' and self.estVide(1) and self.estVide(2) and self.estVide(3) and iPositionTour==0:
-            #modification de l'echiquier pour le roque
-            self.echiquier[3]=self.echiquier[0]
-            self.echiquier[2]=self.echiquier[4]
-            self.echiquier[4]=Piece()
-            self.echiquier[0]=Piece()
-        else :
-            #erreur pour l'utilisateur
-            print("\033[31mCommande non valide. Veuillez Recommencer\033[0m")
-            sleep(2)
+            elif self.tourJoueur == 'noir' and self.estVide(1) and self.estVide(2) and self.estVide(3) and iPositionTour==0:
+                # modification de l'echiquier pour le roque
+                self.echiquier[3]=self.echiquier[0]
+                self.echiquier[2]=self.echiquier[4]
+                self.echiquier[4]=Piece()
+                self.echiquier[0]=Piece()
+    def TesteRoque(self,positionTour):
+        '''Fonction qui teste la possibilite de roquer'''
+        iPositionTour=self.conversionEnIndex(positionTour)
+        if self.echiquier[60].getNom()=='ROI' and self.echiquier[60].getCouleur()=='blanc':
+            if self.tourJoueur == 'blanc' and self.estVide(61) and self.estVide(62) and iPositionTour==63:
+                return (True,'blanc')
+            elif self.tourJoueur == 'blanc' and self.estVide(59) and self.estVide(58) and self.estVide(57) and iPositionTour==56:
+                return (True,'blanc')
+        if self.echiquier[4].getNom()=='ROI' and self.echiquier[4].getCouleur()=='noir':     
+            if self.tourJoueur == 'noir' and self.estVide(6) and self.estVide(5) and iPositionTour==7:
+                return (True,'noir')
+            elif self.tourJoueur == 'noir' and self.estVide(1) and self.estVide(2) and self.estVide(3) and iPositionTour==0:
+                return (True,'noir') 
+            
+        return (False,None)
 # =============================================================================
 # Echec
 # =============================================================================
@@ -463,5 +476,3 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-
-
