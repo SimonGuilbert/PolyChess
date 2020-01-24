@@ -71,7 +71,7 @@ class Echiquier:
         return self.tourJoueur
     
     def nbre(self):
-        '''renvoie le nombre de piéce restant sur l'échiquier'''
+        '''renvoie le nombre de pièce restant sur l'échiquier'''
         return 32 -(len(self.cimetiereBlanc)+len(self.cimetiereNoir))
 # =============================================================================
 # Fonction de conversion 
@@ -428,7 +428,7 @@ class Echiquier:
                
     def echecEtMat(self):
         '''Avec la table de fin de jeux'''
-        if self.nbre() in [i for i in range(4)]:#sysygy commence seulement si il y a pas de plus de 3 pieces sur le terrain
+        if self.nbre() < 4 and self.nbre >= 0 :#sysygy commence seulement si il y a pas de plus de 3 pieces sur le terrain
             strEchiquier=self.changementDeEchiquier()#conversion de l'echiquier
             #utilisation de la librairie
             tablebase = chess.syzygy.open_tablebase("regular")
