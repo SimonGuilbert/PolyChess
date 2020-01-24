@@ -37,11 +37,11 @@ class Echiquier:
         self.echiquier = [
         Piece('TOUR','noir'),Piece('CAVALIER','noir'),Piece('FOU','noir'),Piece('DAME','noir'),Piece('ROI','noir'),Piece('FOU','noir'),Piece('CAVALIER','noir'),Piece('TOUR','noir'),
         Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),Piece('PION','noir'),
+        Piece(),Piece(),Piece(),Piece(),Piece('PION','blanc'),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
         Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),Piece(),
-        Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
+        Piece('PION','blanc'),Piece('PION','blanc'),Piece(),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),
         Piece('TOUR','blanc'),Piece('CAVALIER','blanc'),Piece('FOU','blanc'),Piece('DAME','blanc'),Piece('ROI','blanc'),Piece('FOU','blanc'),Piece('CAVALIER','blanc'),Piece('TOUR','blanc')
         ]
         for i in self.echiquier:
@@ -52,7 +52,7 @@ class Echiquier:
         self.tourJoueur='blanc'
         # Variable qui repertorie tout les coups joues
         self.historique=[]
-        self.cimetiereBlanc=[]
+        self.cimetiereBlanc=[Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc'),Piece('PION','blanc')]
         self.cimetiereNoir=[]
         #defini les mouvements possible pour chaque pion
         self.mvtPossible()
@@ -127,20 +127,21 @@ class Echiquier:
                 self.jeux[index]='R'+ self.echiquier[index].getCouleur()[0]
             elif self.echiquier[index].getNom()=='':
                 self.jeux[index]='--'
-                
     def affichageCimetiere(self,cimetiere):
         AffCimetiere = ''
-        for k in cimetiere :
-            AffCimetiere += k.getNom()[0]+k.getCouleur()[0]
-            if len(AffCimetiere) == n?:
+        for k in cimetiere:
+            AffCimetiere += k.getNom()[0]+k.getCouleur()[0]+' '
+            if len(AffCimetiere) == 78:
                 AffCimetiere += '\n'
         return AffCimetiere
     
     def __str__(self):
         ''' fonction d'affichage du jeux d'echec '''
-        
-        self.matriceJeux()  
-        affichage='   a  b  c  d  e  f  g  h'+'\n'
+        affichage=''
+        self.matriceJeux() 
+        affichage+='cimetière Blanc'+'\n'
+        affichage+=self.affichageCimetiere(self.cimetiereBlanc)+'\n'
+        affichage+='   a  b  c  d  e  f  g  h'+'\n'
         affichage+='  -----------------------'+'\n'
         compteur=8
         for index in range(len(self.jeux)):
@@ -152,9 +153,10 @@ class Echiquier:
             if self.coordonnees[index][0]=='h':
                 affichage+='|'+str(compteur)+'\n'
                 compteur-=1
-        
         affichage+='  -----------------------'+'\n'
-        affichage+='   a  b  c  d  e  f  g  h'
+        affichage+='   a  b  c  d  e  f  g  h'+'\n'
+        affichage+='cimetière Noir'+'\n'
+        affichage+=self.affichageCimetiere(self.cimetiereNoir)+'\n'
         print(affichage)
         
     def affichageHistorique(self):
@@ -266,6 +268,8 @@ class Echiquier:
         '''recherche de mise en echec. Renvoie un booleen et la couleur qui est en echec '''     
         IRoiNoir= self.rechercheRoi('ROI','noir')#position du roi noir
         ListeBlanc= self.coupsPossibleBlanc()#liste des coups possibles pour les blancs
+        print(ListeBlanc)
+        print(IRoiNoir)
         if IRoiNoir in ListeBlanc:
             return (True,'noir') #si le roi est mangeable alors on est en echec
         IRoiBlanc= self.rechercheRoi('ROI','blanc')#position du roi blanc
@@ -422,20 +426,20 @@ class Echiquier:
                 return valeur
         else:
             return 0
-        
 # =============================================================================
 # Mise a jour des deplacements possibles
-# =============================================================================
-        
+# =============================================================================  
     def mvtPossible(self):
         '''fonction pour actualiser tout les coups possibles des pieces en modifiant la variable de la classe piece'''
         for i  in range(len(self.echiquier)):
             # verfication du coup joue par rapport a tous les coups possibles de la piece
             # en l'assignant a la Liste de la piece
             if self.echiquier[i].getNom()=='TOUR':
-                 self.echiquier[i].MAJPosition(self.echiquier[i].mvmt_tour(i))
+                self.echiquier[i].MAJPosition(self.echiquier[i].mvmt_tour(i))
             if self.echiquier[i].getNom()=='PION':
-                 self.echiquier[i].MAJPosition(self.echiquier[i].mvmt_pion(i))
+                print(self.echiquier[i].mvmt_pion(i))
+                self.echiquier[i].MAJPosition(self.echiquier[i].mvmt_pion(i))
+                print(self.echiquier[i].Lposition)
             if self.echiquier[i].getNom()=='CAVALIER':
                 self.echiquier[i].MAJPosition(self.echiquier[i].mvmt_cavalier(i))
             if self.echiquier[i].getNom()=='ROI':
@@ -463,5 +467,3 @@ class Echiquier:
             if i.getCouleur()=='noir':
                 coupsPossibleNoir+=i.Lposition
         return coupsPossibleNoir
-
-
