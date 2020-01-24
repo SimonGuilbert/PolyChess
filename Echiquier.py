@@ -127,7 +127,15 @@ class Echiquier:
                 self.jeux[index]='R'+ self.echiquier[index].getCouleur()[0]
             elif self.echiquier[index].getNom()=='':
                 self.jeux[index]='--'
-        
+                
+    def affichageCimetiere(self,cimetiere):
+        AffCimetiere = ''
+        for k in cimetiere :
+            AffCimetiere += k.getNom()[0]+k.getCouleur()[0]
+            if len(AffCimetiere) == n?:
+                AffCimetiere += '\n'
+        return AffCimetiere
+    
     def __str__(self):
         ''' fonction d'affichage du jeux d'echec '''
         
